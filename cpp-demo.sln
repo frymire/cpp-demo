@@ -21,6 +21,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sorting", "sorting\sorting.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "arrays", "arrays\arrays.vcxproj", "{91147CA0-14D0-485F-B53B-EA11AD9F9489}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "namespace-collision", "namespace-collision\namespace-collision.vcxproj", "{FEFD9324-67B9-4635-8B23-3872B2CDC32C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -101,6 +103,14 @@ Global
 		{91147CA0-14D0-485F-B53B-EA11AD9F9489}.Release|x64.Build.0 = Release|x64
 		{91147CA0-14D0-485F-B53B-EA11AD9F9489}.Release|x86.ActiveCfg = Release|Win32
 		{91147CA0-14D0-485F-B53B-EA11AD9F9489}.Release|x86.Build.0 = Release|Win32
+		{FEFD9324-67B9-4635-8B23-3872B2CDC32C}.Debug|x64.ActiveCfg = Debug|x64
+		{FEFD9324-67B9-4635-8B23-3872B2CDC32C}.Debug|x64.Build.0 = Debug|x64
+		{FEFD9324-67B9-4635-8B23-3872B2CDC32C}.Debug|x86.ActiveCfg = Debug|Win32
+		{FEFD9324-67B9-4635-8B23-3872B2CDC32C}.Debug|x86.Build.0 = Debug|Win32
+		{FEFD9324-67B9-4635-8B23-3872B2CDC32C}.Release|x64.ActiveCfg = Release|x64
+		{FEFD9324-67B9-4635-8B23-3872B2CDC32C}.Release|x64.Build.0 = Release|x64
+		{FEFD9324-67B9-4635-8B23-3872B2CDC32C}.Release|x86.ActiveCfg = Release|Win32
+		{FEFD9324-67B9-4635-8B23-3872B2CDC32C}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

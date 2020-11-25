@@ -1,5 +1,7 @@
 
 #include "macros.h"
+using std::cout;
+using std::endl;
 
 // Demonstrate the use of macros.
 // See here: https://blog.kowalczyk.info/article/j/guide-to-predefined-macros-in-c-compilers-gcc-clang-msvc-etc..html

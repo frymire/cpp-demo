@@ -5,8 +5,9 @@
 #ifndef CPP_DEMO_MACROS_MACROS_H
 #define CPP_DEMO_MACROS_MACROS_H
 
+// Alternatively, use #pragma once, which is cleaner. This is discouraged by Google, 
+// but is now commonly supported by all major compilers.
+
 #include <iostream>
-using std::cout;
-using std::endl;
 
 #endif // CPP_DEMO_MACROS_MACROS_H
