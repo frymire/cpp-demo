@@ -31,6 +31,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "delegating-constructor", "d
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "hash-table", "hash-table\hash-table.vcxproj", "{223E9F2D-CA88-403F-87C0-888C24CD53E5}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "string-demo", "string-demo\string-demo.vcxproj", "{1A8B376F-2B77-4229-B474-8A296835F1BC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -151,6 +153,14 @@ Global
 		{223E9F2D-CA88-403F-87C0-888C24CD53E5}.Release|x64.Build.0 = Release|x64
 		{223E9F2D-CA88-403F-87C0-888C24CD53E5}.Release|x86.ActiveCfg = Release|Win32
 		{223E9F2D-CA88-403F-87C0-888C24CD53E5}.Release|x86.Build.0 = Release|Win32
+		{1A8B376F-2B77-4229-B474-8A296835F1BC}.Debug|x64.ActiveCfg = Debug|x64
+		{1A8B376F-2B77-4229-B474-8A296835F1BC}.Debug|x64.Build.0 = Debug|x64
+		{1A8B376F-2B77-4229-B474-8A296835F1BC}.Debug|x86.ActiveCfg = Debug|Win32
+		{1A8B376F-2B77-4229-B474-8A296835F1BC}.Debug|x86.Build.0 = Debug|Win32
+		{1A8B376F-2B77-4229-B474-8A296835F1BC}.Release|x64.ActiveCfg = Release|x64
+		{1A8B376F-2B77-4229-B474-8A296835F1BC}.Release|x64.Build.0 = Release|x64
+		{1A8B376F-2B77-4229-B474-8A296835F1BC}.Release|x86.ActiveCfg = Release|Win32
+		{1A8B376F-2B77-4229-B474-8A296835F1BC}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
