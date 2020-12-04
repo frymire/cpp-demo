@@ -23,6 +23,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "arrays", "arrays\arrays.vcx
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "namespace-collision", "namespace-collision\namespace-collision.vcxproj", "{FEFD9324-67B9-4635-8B23-3872B2CDC32C}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "doubly-linked-list", "doubly-linked-list\doubly-linked-list.vcxproj", "{96C38DDF-3443-4D3D-AE7C-CCF0216DEB87}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -111,6 +113,14 @@ Global
 		{FEFD9324-67B9-4635-8B23-3872B2CDC32C}.Release|x64.Build.0 = Release|x64
 		{FEFD9324-67B9-4635-8B23-3872B2CDC32C}.Release|x86.ActiveCfg = Release|Win32
 		{FEFD9324-67B9-4635-8B23-3872B2CDC32C}.Release|x86.Build.0 = Release|Win32
+		{96C38DDF-3443-4D3D-AE7C-CCF0216DEB87}.Debug|x64.ActiveCfg = Debug|x64
+		{96C38DDF-3443-4D3D-AE7C-CCF0216DEB87}.Debug|x64.Build.0 = Debug|x64
+		{96C38DDF-3443-4D3D-AE7C-CCF0216DEB87}.Debug|x86.ActiveCfg = Debug|Win32
+		{96C38DDF-3443-4D3D-AE7C-CCF0216DEB87}.Debug|x86.Build.0 = Debug|Win32
+		{96C38DDF-3443-4D3D-AE7C-CCF0216DEB87}.Release|x64.ActiveCfg = Release|x64
+		{96C38DDF-3443-4D3D-AE7C-CCF0216DEB87}.Release|x64.Build.0 = Release|x64
+		{96C38DDF-3443-4D3D-AE7C-CCF0216DEB87}.Release|x86.ActiveCfg = Release|Win32
+		{96C38DDF-3443-4D3D-AE7C-CCF0216DEB87}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
