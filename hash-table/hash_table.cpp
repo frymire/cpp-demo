@@ -34,13 +34,8 @@ HashTable::~HashTable() {
 
   for (int i = 0; i < kTableSize; ++i) {
 
-    // Get the head entry in slot i.
+   // Delete each entry in slot i.
     Entry* head = m_entries[i];
-
-    // If the slot is empty, move on to the next slot.
-    if (head == NULL) { continue; }
-
-    // Otherwise, loop over the entries in the slot, deleting each entry.
     Entry* next;
     while (head != NULL) {
       next = head->m_next;
@@ -49,7 +44,7 @@ HashTable::~HashTable() {
     }
   }
 
-  // Finally, delete the entries array itself.
+  // Delete the entries array itself.
   delete m_entries;
 }
 
