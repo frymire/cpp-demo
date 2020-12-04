@@ -4,15 +4,24 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct node_t {
-  int data; // could be a struct to hold more data
-  struct node_t* previous;
-  struct node_t* next;
-} node_t;
+class Node {
+public:
+  int m_data;
+  Node* m_previous;
+  Node* m_next;
+  Node(int data, Node* previous, Node* next) : m_data(data), m_previous(previous), m_next(next) {}
+  ~Node();
+};
 
-void add_at(int data, int position);
-void add_at_beginning(int data);
-void add_at_end(int data);
-void remove(int data);
-void print();
-void print_in_reverse();
+class DoublyLinkedList {
+  Node* m_head;
+public:
+  DoublyLinkedList() : m_head(NULL) {}
+  ~DoublyLinkedList();
+  void add_at(int data, int position);
+  void add_at_beginning(int data);
+  void add_at_end(int data);
+  void remove(int data); // Removes the first instance of a specified value from the list.
+  void print();
+  void print_in_reverse();
+};

@@ -7,21 +7,22 @@
 
 int main(int argc, char **argv) {
 
-  add_at_end(2);
-  add_at_end(3);
-  add_at_end(5);
-  add_at_beginning(1);
-  add_at(4, 3);
+  DoublyLinkedList myList;
+  myList.add_at_end(2);
+  myList.add_at_end(3);
+  myList.add_at_end(5);
+  myList.add_at_beginning(1);
+  myList.add_at(4, 3);
 
   printf("forward:\n");
-  print();
+  myList.print();
 
-  remove(1);
-  remove(3);
-  remove(5);
+  myList.remove(1);
+  myList.remove(3);
+  myList.remove(5);
 
-  printf("reverse:\n");
-  print_in_reverse();
+  printf("\nreverse:\n");
+  myList.print_in_reverse();
 
   return 0;
 }
