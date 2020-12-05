@@ -18,10 +18,10 @@ class DoublyLinkedList {
 public:
   DoublyLinkedList() : m_head(NULL) {}
   ~DoublyLinkedList();
-  void add_at(int data, int position);
-  void add_at_beginning(int data);
-  void add_at_end(int data);
-  void remove(int data); // Removes the first instance of a specified value from the list.
-  void print();
-  void print_in_reverse();
+  void AddAt(int data, int position);
+  void AddAtBeginning(int data);
+  void AddAtEnd(int data);
+  void Remove(int data); // Removes the first instance of a specified value from the list.
+  void Print();
+  void PrintInReverse();
 };

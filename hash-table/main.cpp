@@ -9,19 +9,19 @@ void main() {
 
   HashTable names(4); // also interesting with 20,000
 
-  names.set("name1", "em");
-  names.set("name2", "russian");
-  names.set("name3", "pizza");
-  names.set("name4", "doge");
-  names.set("name5", "pyro");
-  names.set("name6", "joost");
-  names.set("name7", "kalix");
-  names.print();
+  names.Set("name1", "em");
+  names.Set("name2", "russian");
+  names.Set("name3", "pizza");
+  names.Set("name4", "doge");
+  names.Set("name5", "pyro");
+  names.Set("name6", "joost");
+  names.Set("name7", "kalix");
+  names.Print();
 
   printf("\n\nRemove names 3, 4, and 6...\n\n");
-  names.remove("name3");
-  names.remove("name4");
-  names.remove("name6");
+  names.Remove("name3");
+  names.Remove("name4");
+  names.Remove("name6");
   printf("\n");
-  names.print();
+  names.Print();
 }

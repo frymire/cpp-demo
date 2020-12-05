@@ -18,7 +18,7 @@ DoublyLinkedList::~DoublyLinkedList() {
   }
 }
 
-void DoublyLinkedList::add_at(int data, int target_position) {
+void DoublyLinkedList::AddAt(int data, int target_position) {
 
   // If this is the first item in the list...
   if (m_head == NULL) {
@@ -55,11 +55,11 @@ void DoublyLinkedList::add_at(int data, int target_position) {
   current->m_previous = previous->m_next;
 }
 
-void DoublyLinkedList::add_at_beginning(int data) { add_at(data, 0); }
+void DoublyLinkedList::AddAtBeginning(int data) { AddAt(data, 0); }
 
-void DoublyLinkedList::add_at_end(int data) { add_at(data, -1); }
+void DoublyLinkedList::AddAtEnd(int data) { AddAt(data, -1); }
 
-void DoublyLinkedList::remove(int data) {
+void DoublyLinkedList::Remove(int data) {
 
   // Seek until we find the data item or hit the end of the list.
   Node* current = m_head;
@@ -97,7 +97,7 @@ void DoublyLinkedList::remove(int data) {
   return;
 }
 
-void DoublyLinkedList::print() {
+void DoublyLinkedList::Print() {
   Node* current = m_head;
   while (current != NULL) {
     printf("data: %d\n", current->m_data);
@@ -105,7 +105,7 @@ void DoublyLinkedList::print() {
   }
 }
 
-void DoublyLinkedList::print_in_reverse() {
+void DoublyLinkedList::PrintInReverse() {
   Node* current = m_head;
   while (current->m_next != NULL) { current = current->m_next; } // seek to the end
   while (current != NULL) {

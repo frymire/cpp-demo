@@ -17,7 +17,7 @@ Entry::~Entry() {
 
 // Treat the key as a sequence of 8-bit integers, apply an iterative function 
 // using each one, and return the value modulo kTableSize.
-unsigned int Entry::hash(const char* key, const int table_size) {
+unsigned int Entry::Hash(const char* key, const int table_size) {
   int key_length = strlen(key);
   unsigned long int hash_value = 0;
   for (int i = 0; i < key_length; ++i) { hash_value = 37*hash_value + key[i]; }
@@ -48,10 +48,10 @@ HashTable::~HashTable() {
   delete m_entries;
 }
 
-void HashTable::set(const char *key, const char *value) {
+void HashTable::Set(const char *key, const char *value) {
 
   // Check for any existing entries in the slot associated with the key's hash value.
-  unsigned int slot = Entry::hash(key, kTableSize);
+  unsigned int slot = Entry::Hash(key, kTableSize);
   Entry* entry = m_entries[slot];
 
   // If there is no existing entry, simply add the new one.
@@ -82,10 +82,10 @@ void HashTable::set(const char *key, const char *value) {
   previous->m_next = new Entry(key, value);
 }
 
-char* HashTable::get(const char* key) {
+char* HashTable::Get(const char* key) {
 
   // Get the head entry, if any, in the slot associated with the key's hash.
-  Entry* entry = m_entries[Entry::hash(key, kTableSize)];
+  Entry* entry = m_entries[Entry::Hash(key, kTableSize)];
 
   // If the slot is empty, return NULL.
   if (entry == NULL) { return NULL; }
@@ -100,10 +100,10 @@ char* HashTable::get(const char* key) {
   return NULL;
 }
 
-void HashTable::remove(const char* key) {
+void HashTable::Remove(const char* key) {
 
   // Get the head entry, if any, in the slot associated with the key's hash.
-  unsigned int slot = Entry::hash(key, kTableSize);
+  unsigned int slot = Entry::Hash(key, kTableSize);
   Entry* entry = m_entries[slot];
 
   // If the slot is empty, there is nothing to remove.
@@ -140,7 +140,7 @@ void HashTable::remove(const char* key) {
   }
 }
 
-void HashTable::print() {
+void HashTable::Print() {
 
   for (int i = 0; i < kTableSize; ++i) {
 

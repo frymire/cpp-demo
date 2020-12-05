@@ -8,21 +8,21 @@
 int main(int argc, char **argv) {
 
   DoublyLinkedList myList;
-  myList.add_at_end(2);
-  myList.add_at_end(3);
-  myList.add_at_end(5);
-  myList.add_at_beginning(1);
-  myList.add_at(4, 3);
+  myList.AddAtEnd(2);
+  myList.AddAtEnd(3);
+  myList.AddAtEnd(5);
+  myList.AddAtBeginning(1);
+  myList.AddAt(4, 3);
 
   printf("forward:\n");
-  myList.print();
+  myList.Print();
 
-  myList.remove(1);
-  myList.remove(3);
-  myList.remove(5);
+  myList.Remove(1);
+  myList.Remove(3);
+  myList.Remove(5);
 
   printf("\nreverse:\n");
-  myList.print_in_reverse();
+  myList.PrintInReverse();
 
   return 0;
 }

@@ -14,14 +14,14 @@ class Foo {
 public:
   Foo(char x, int y) : m_x(x), m_y(y) {}
   Foo(int y) : Foo('Z', y) {} // C++11
-  void print() { cout << m_x << " " << m_y << endl;  }
+  void Print() { cout << m_x << " " << m_y << endl;  }
 };
 
 int main() {
   
   Foo foo1('A', 1);
-  foo1.print(); 
+  foo1.Print(); 
   
   Foo foo2(2);
-  foo2.print();  
+  foo2.Print();  
 }

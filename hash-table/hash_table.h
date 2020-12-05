@@ -15,7 +15,7 @@ public:
   Entry* m_next;
   Entry(const char* key, const char* value);
   ~Entry();
-  static unsigned int hash(const char* m_key, const int table_size);
+  static unsigned int Hash(const char* m_key, const int table_size);
 };
 
 class HashTable {
@@ -24,8 +24,8 @@ public:
   Entry** m_entries;
   HashTable(int table_size);
   ~HashTable();
-  void set(const char* key, const char* value);
-  char* get(const char* key);
-  void remove(const char* key);
-  void print();
+  void Set(const char* key, const char* value);
+  char* Get(const char* key);
+  void Remove(const char* key);
+  void Print();
 };

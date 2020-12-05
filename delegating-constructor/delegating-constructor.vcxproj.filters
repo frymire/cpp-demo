@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="delegating-constructor.cpp">
+    <ClCompile Include="delegating_constructor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
