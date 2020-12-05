@@ -45,7 +45,4 @@ int main() {
     cout << "Shared Entity still not deleted in outer scope...\n";
   }
   cout << "Shared Entity finally deleted.\n";
-
-
-
 }
