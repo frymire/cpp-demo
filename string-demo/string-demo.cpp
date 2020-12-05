@@ -4,11 +4,11 @@ using std::cout;
 using std::endl;
 
 #include <string>
+using namespace std::string_literals; // R"(...)"
 
 void main() {
 
   // You can specify a multi-line string with R"({your text})"
-  using namespace std::string_literals;
   const char* multi_line_string = 
 R"(Line1
 Line2
