@@ -6,7 +6,7 @@
 // warning to be treated as an error like this.
 //#pragma warning (error: 4172)
 
-// Alternatively, to do it across all file in the project, do this...
+// Alternatively, to do it across all files in the project, do this...
 //   Project Properties -> C/C++ -> Advanced -> Treat Specific Warnings As Errors -> {add 4172}
 
 #include <stdio.h>
