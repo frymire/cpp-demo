@@ -14,13 +14,13 @@ using std::this_thread::sleep_for;
 #include <chrono>
 using namespace std::chrono_literals; // define time, for instance, as "1s"
 
-static bool s_button_has_been_pressed = false;
+static bool s_enter_was_pressed = false;
 
 void DoWork() {
 
   cout << "Started thread ID = " << std::this_thread::get_id() << endl;
 
-  while (!s_button_has_been_pressed) { 
+  while (!s_enter_was_pressed) { 
     cout << "Working...\n"; 
     sleep_for(1s);
   }
@@ -37,7 +37,7 @@ int main() {
 
   // Block on the main thread until the user presses enter.
   cin.get();
-  s_button_has_been_pressed = true;
+  s_enter_was_pressed = true;
 
   // Wait for worker to complete its work and rejoin the main thread.
   worker.join();
