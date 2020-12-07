@@ -7,7 +7,13 @@ using std::endl;
 using std::vector;
 
 #include <functional> // lambda functions
-//#include <algorithm> // find_if
+
+#include <algorithm>
+using std::find_if;
+using std::copy_if;
+
+#include <iterator>
+using std::back_inserter;
 
 class Vertex {
 
@@ -21,6 +27,8 @@ public:
   Vertex(const Vertex& vertex): x(vertex.x), y(vertex.y), z(vertex.z) {
     cout << "Copied a Vertex\n";
   }
+
+  void print() { printf("%d %d %d\n", x, y, z); }
 };
 
 int main() {
@@ -33,10 +41,15 @@ int main() {
   std::function<void(int)> lambda = [=](int x) { cout << "Value = " << x << endl;  };
   for (int value: values) lambda(value); 
 
-  // Filter like this...
-  //auto it = std::find_if(values.begin(), values.end(), [](int value) { return value > 3; });
-  //cout << *it << endl;
-
+  // Return an iterator to the first element that satisfies a condition.
+  auto gt_2 = [](int value) { return value > 2; };
+  auto first_gt_2 = std::find_if(begin(values), end(values), gt_2);
+  cout << *first_gt_2 << endl;
+  
+  // Filter for the elements that satisfy a condition.
+  vector<int> all_gt_2;
+  copy_if(values.begin(), values.end(), back_inserter(all_gt_2), gt_2);
+  for (auto value: all_gt_2) { cout << value << endl; }
 
   cout << "\n\nDemonstrate unexpected copying due to dynamic vector resizing...\n";
   // See: https://www.youtube.com/watch?v=HcESuwmlHEY&list=WL&index=72
@@ -65,6 +78,11 @@ int main() {
   best_vertices.emplace_back(1, 2, 3); // Only pass the parameter list for the Vertex constructor.
   best_vertices.emplace_back(4, 5, 6);
   best_vertices.emplace_back(7, 8, 9); // no copies!
+
+  // Also, you can now initialize class instances like this...
+  cout << endl;
+  vector<Vertex> directlyInitialized {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
+  for (Vertex v : directlyInitialized) { v.print(); }
 
   return 0;
 }
