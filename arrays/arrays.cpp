@@ -38,14 +38,14 @@ int main() {
   for (int i = 0; i < 3; i++) cout << n[i];
   cout << endl;
 
-  vector<int> values = {1, 5, 4, 2, 3};
+  vector<int> values = {1, 5, 3, 2, 4};
   function<void(int)> lambda = [=](int x) { cout << "Value = " << x << endl; };
   for (int value: values) lambda(value); 
 
   // Return an iterator to the first element that satisfies a condition.
   auto gt_2 = [](int value) { return value > 2; };
-  auto first_gt_2 = std::find_if(begin(values), end(values), gt_2);
-  cout << *first_gt_2 << endl;
+  auto first_gt_2 = find_if(begin(values), end(values), gt_2);
+  cout << "\nFirst > 2 is " << *first_gt_2 << endl << endl;
   
   // Filter for the elements that satisfy a condition.
   vector<int> all_gt_2;
