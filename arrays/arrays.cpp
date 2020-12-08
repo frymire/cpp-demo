@@ -7,6 +7,7 @@ using std::endl;
 using std::vector;
 
 #include <functional> // lambda functions
+using std::function;
 
 #include <algorithm>
 using std::find_if;
@@ -38,7 +39,7 @@ int main() {
   cout << endl;
 
   vector<int> values = {1, 5, 4, 2, 3};
-  std::function<void(int)> lambda = [=](int x) { cout << "Value = " << x << endl;  };
+  function<void(int)> lambda = [=](int x) { cout << "Value = " << x << endl; };
   for (int value: values) lambda(value); 
 
   // Return an iterator to the first element that satisfies a condition.
