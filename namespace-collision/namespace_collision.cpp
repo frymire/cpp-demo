@@ -6,6 +6,10 @@
 #include <iostream>
 #include <string> // provides a conversion from const std::string to const char*
 
+namespace top_level_namespace { namespace lower_level_namespace {
+  void print() { std::cout << "Hey, how's it going?\n"; }
+} }
+
 namespace printer {
   void print(const std::string& name) { std::cout << name << " is awesome!\n"; }
 }
@@ -15,6 +19,10 @@ namespace malicious_printer {
 }
 
 void main() {
+
+  // First, let's just demonstrate a namespace alias, which is nice for long nested namespaces.
+  namespace n2 = top_level_namespace::lower_level_namespace;
+  n2::print();
 
   // Naming functions with explicit scope works fine, of course.
   printer::print("Mark");
