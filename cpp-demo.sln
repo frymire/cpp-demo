@@ -65,6 +65,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "precompiled-headers", "prec
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "lvalue-rvalue", "lvalue-rvalue\lvalue-rvalue.vcxproj", "{7610F3EC-CA29-4B43-980C-3E74DB6AB5C7}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "move", "move\move.vcxproj", "{C22C35E4-5224-473A-A509-2AD6A4C00334}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -321,6 +323,14 @@ Global
 		{7610F3EC-CA29-4B43-980C-3E74DB6AB5C7}.Release|x64.Build.0 = Release|x64
 		{7610F3EC-CA29-4B43-980C-3E74DB6AB5C7}.Release|x86.ActiveCfg = Release|Win32
 		{7610F3EC-CA29-4B43-980C-3E74DB6AB5C7}.Release|x86.Build.0 = Release|Win32
+		{C22C35E4-5224-473A-A509-2AD6A4C00334}.Debug|x64.ActiveCfg = Debug|x64
+		{C22C35E4-5224-473A-A509-2AD6A4C00334}.Debug|x64.Build.0 = Debug|x64
+		{C22C35E4-5224-473A-A509-2AD6A4C00334}.Debug|x86.ActiveCfg = Debug|Win32
+		{C22C35E4-5224-473A-A509-2AD6A4C00334}.Debug|x86.Build.0 = Debug|Win32
+		{C22C35E4-5224-473A-A509-2AD6A4C00334}.Release|x64.ActiveCfg = Release|x64
+		{C22C35E4-5224-473A-A509-2AD6A4C00334}.Release|x64.Build.0 = Release|x64
+		{C22C35E4-5224-473A-A509-2AD6A4C00334}.Release|x86.ActiveCfg = Release|Win32
+		{C22C35E4-5224-473A-A509-2AD6A4C00334}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
