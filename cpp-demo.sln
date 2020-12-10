@@ -63,11 +63,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "timing", "timing\timing.vcx
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "precompiled-headers", "precompiled-headers\precompiled-headers.vcxproj", "{29BCA586-B0B6-4041-BB9C-6A8ECBB0E9D5}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pch-test", "pch-test\pch-test.vcxproj", "{68B4BC68-ADE7-4C65-8035-50CA8BEBA0A4}"
-	ProjectSection(ProjectDependencies) = postProject
-		{29BCA586-B0B6-4041-BB9C-6A8ECBB0E9D5} = {29BCA586-B0B6-4041-BB9C-6A8ECBB0E9D5}
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -316,14 +311,6 @@ Global
 		{29BCA586-B0B6-4041-BB9C-6A8ECBB0E9D5}.Release|x64.Build.0 = Release|x64
 		{29BCA586-B0B6-4041-BB9C-6A8ECBB0E9D5}.Release|x86.ActiveCfg = Release|Win32
 		{29BCA586-B0B6-4041-BB9C-6A8ECBB0E9D5}.Release|x86.Build.0 = Release|Win32
-		{68B4BC68-ADE7-4C65-8035-50CA8BEBA0A4}.Debug|x64.ActiveCfg = Debug|x64
-		{68B4BC68-ADE7-4C65-8035-50CA8BEBA0A4}.Debug|x64.Build.0 = Debug|x64
-		{68B4BC68-ADE7-4C65-8035-50CA8BEBA0A4}.Debug|x86.ActiveCfg = Debug|Win32
-		{68B4BC68-ADE7-4C65-8035-50CA8BEBA0A4}.Debug|x86.Build.0 = Debug|Win32
-		{68B4BC68-ADE7-4C65-8035-50CA8BEBA0A4}.Release|x64.ActiveCfg = Release|x64
-		{68B4BC68-ADE7-4C65-8035-50CA8BEBA0A4}.Release|x64.Build.0 = Release|x64
-		{68B4BC68-ADE7-4C65-8035-50CA8BEBA0A4}.Release|x86.ActiveCfg = Release|Win32
-		{68B4BC68-ADE7-4C65-8035-50CA8BEBA0A4}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

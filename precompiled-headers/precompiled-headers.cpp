@@ -1,5 +1,5 @@
 
-// Demonstrate precompiled headers.
+// Demonstrate precompiled headers in Visual Studio. 
 // See here: https://www.youtube.com/watch?v=trMdw6tCHlY
 // And here: https://www.youtube.com/watch?v=eSI4wctZUto&list=PLlrATfBNZ98dudnM48yfGUldqGD0S4FFb&index=72&t=2s
 
