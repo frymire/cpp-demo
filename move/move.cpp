@@ -16,10 +16,10 @@ public:
   MyString() = default;
   
   MyString(const char* str) { 
-    printf("Created!\n");
     m_size = strlen(str);
     m_data = new char[m_size];
     memcpy(m_data, str, m_size);
+    printf("Created (size = %d)!\n", m_size);
   }
 
   // Copy constructor
@@ -36,12 +36,12 @@ public:
     m_size = that.m_size;
     m_data = that.m_data; // can just assign the pointer, because that is an rvalue
 
-    // Tricky: Nee to create a "hallow object" here. Assign that.m_data to nullptr so that 
-    // the data block isn't deleted when the destructor is called on that.
+    // Tricky: Need to create a "hallow object", so that the data block isn't deleted 
+    // when the destructor is called on that. 
     that.m_size = 0;
     that.m_data = nullptr;
 
-    printf("Moved (size = %d!\n", m_size);
+    printf("Moved (size = %d)!\n", m_size);
   }
 
   ~MyString() { 
@@ -73,6 +73,6 @@ public:
 };
 
 int main() {
-  Entity e("Mark");
+  Entity e(MyString("Mark"));
   e.PrintName();
 }
