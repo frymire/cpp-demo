@@ -19,7 +19,7 @@ int compareInts(const void* a, const void* b) {
   return (*(int*) a - *(int*) b);
 }
 
-void main() {
+int main() {
 
   // Quick sort
   int values[] = {40, 10, 100, 90, 20, 25};
