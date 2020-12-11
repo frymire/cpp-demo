@@ -4,9 +4,10 @@
 // https://ideone.com/rkFVXa
 
 #include <iostream>
-#include <type_traits> // enable_if, is_base_of
 using std::cout;
 using std::endl;
+
+#include <type_traits>
 using std::enable_if;
 using std::is_base_of;
 
@@ -25,15 +26,16 @@ public:
   char* b = (char*) "other";
 };
 
-template<typename T, typename enable_if<is_base_of<ParentClass, T>::value>::type* = nullptr> T Foo(T bar) {
+template<typename T, typename enable_if<is_base_of<ParentClass, T>::value>::type* = nullptr> 
+T Foo(T bar) {
   return T();
 }
 
-void main() {
+int main() {
 
   ChildClass child;
   cout << Foo(child).b << endl;
 
-  //OtherClass other;
+  OtherClass other;
   //cout << (Foo(other)).b << endl; //compiler error
 }

@@ -2,7 +2,7 @@
 // Demonstrate how to create a static library.
 
 // Create an empty project, then...
-//   Project Settings -> General -> Configuration Type -> Static library (.lib)
+//   Project Settings -> General -> Configuration Type -> Static Library (.lib)
 
 #pragma once
 

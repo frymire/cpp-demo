@@ -5,7 +5,8 @@
 using std::cout;
 using std::endl;
 
-void main() {
+// Return int rather than void. The main function will automatically return 0 for you.
+int main() {
   printf("Hello, cruel world.\n");
   cout << "Hello, cruel world." << endl;
 }
