@@ -77,6 +77,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dynamic-library-app", "dyna
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "casting", "casting\casting.vcxproj", "{5711E505-221C-4D6D-AFC7-CABA09598376}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "visual-benchmarking", "visual-benchmarking\visual-benchmarking.vcxproj", "{CEAD3EE9-0B13-4F51-A9EF-4C0418E7B1BF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -381,6 +383,14 @@ Global
 		{5711E505-221C-4D6D-AFC7-CABA09598376}.Release|x64.Build.0 = Release|x64
 		{5711E505-221C-4D6D-AFC7-CABA09598376}.Release|x86.ActiveCfg = Release|Win32
 		{5711E505-221C-4D6D-AFC7-CABA09598376}.Release|x86.Build.0 = Release|Win32
+		{CEAD3EE9-0B13-4F51-A9EF-4C0418E7B1BF}.Debug|x64.ActiveCfg = Debug|x64
+		{CEAD3EE9-0B13-4F51-A9EF-4C0418E7B1BF}.Debug|x64.Build.0 = Debug|x64
+		{CEAD3EE9-0B13-4F51-A9EF-4C0418E7B1BF}.Debug|x86.ActiveCfg = Debug|Win32
+		{CEAD3EE9-0B13-4F51-A9EF-4C0418E7B1BF}.Debug|x86.Build.0 = Debug|Win32
+		{CEAD3EE9-0B13-4F51-A9EF-4C0418E7B1BF}.Release|x64.ActiveCfg = Release|x64
+		{CEAD3EE9-0B13-4F51-A9EF-4C0418E7B1BF}.Release|x64.Build.0 = Release|x64
+		{CEAD3EE9-0B13-4F51-A9EF-4C0418E7B1BF}.Release|x86.ActiveCfg = Release|Win32
+		{CEAD3EE9-0B13-4F51-A9EF-4C0418E7B1BF}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
