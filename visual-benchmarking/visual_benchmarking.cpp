@@ -72,5 +72,5 @@ int main() {
   }
   Instrumentor::Get().EndSession();
   // In Google Chrome, go to chrome://tracing, click "Load", and select "results.json" that was 
-  // just created in the project folder.
+  // just created in the project folder. Or drag and drop the file into the Chrome window.
 }
