@@ -81,6 +81,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "visual-benchmarking", "visu
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "singleton", "singleton\singleton.vcxproj", "{0785E74A-5B4C-41AE-B5E7-82BB386EBE35}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tuples", "tuples\tuples.vcxproj", "{67588E1B-B9DA-434B-9C49-8DCA53EE7DB9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -401,6 +403,14 @@ Global
 		{0785E74A-5B4C-41AE-B5E7-82BB386EBE35}.Release|x64.Build.0 = Release|x64
 		{0785E74A-5B4C-41AE-B5E7-82BB386EBE35}.Release|x86.ActiveCfg = Release|Win32
 		{0785E74A-5B4C-41AE-B5E7-82BB386EBE35}.Release|x86.Build.0 = Release|Win32
+		{67588E1B-B9DA-434B-9C49-8DCA53EE7DB9}.Debug|x64.ActiveCfg = Debug|x64
+		{67588E1B-B9DA-434B-9C49-8DCA53EE7DB9}.Debug|x64.Build.0 = Debug|x64
+		{67588E1B-B9DA-434B-9C49-8DCA53EE7DB9}.Debug|x86.ActiveCfg = Debug|Win32
+		{67588E1B-B9DA-434B-9C49-8DCA53EE7DB9}.Debug|x86.Build.0 = Debug|Win32
+		{67588E1B-B9DA-434B-9C49-8DCA53EE7DB9}.Release|x64.ActiveCfg = Release|x64
+		{67588E1B-B9DA-434B-9C49-8DCA53EE7DB9}.Release|x64.Build.0 = Release|x64
+		{67588E1B-B9DA-434B-9C49-8DCA53EE7DB9}.Release|x86.ActiveCfg = Release|Win32
+		{67588E1B-B9DA-434B-9C49-8DCA53EE7DB9}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
