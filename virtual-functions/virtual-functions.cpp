@@ -14,7 +14,7 @@ using std::string;
 // Define an interface comprised only of virtual functions (like a Scala trait).
 class Printable {
 public:
-  virtual string GetClassName() = 0;
+  virtual string GetClassName() = 0; // = 0 means it's a pure virtual function, no implementation
 };
 
 void PrintClassName(Printable* obj) { cout << "Class name is " << obj->GetClassName() << endl; }
