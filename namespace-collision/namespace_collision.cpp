@@ -1,6 +1,7 @@
 
 // This code is shows why you really should use explicit scoped calls such as std::cout, 
-// rather than saying "using namespace std" or *even* "using std::cout".
+// rather than saying "using namespace std". It even recommends avoiding "using std::cout",
+// for instance, by saying "using my_cout = std::cout".
 // See here: https://www.youtube.com/watch?v=4NYC-VU-svE&list=WL&index=86
 
 #include <iostream>
