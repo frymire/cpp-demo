@@ -1,0 +1,2 @@
+Hi, from data.txt!
+Another line from data.txt.
