@@ -27,8 +27,12 @@ int main() {
   Entity e3 = Entity("Kurt"); // without "new" still instantiates on the stack
   e3.Print();
 
+  // Also equivalently...
+  Entity e4 = {"Edward"};
+  e4.Print();
+
   // To instantiate on the heap, use "new", which returns a pointer to the Entity.
-  Entity* e4 = new Entity("Anna");
-  e4->Print();
-  delete e4; // call delete to free the heap-allocated memory
+  Entity* e5 = new Entity("Anna");
+  e5->Print();
+  delete e5; // call delete to free the heap-allocated memory
 }
