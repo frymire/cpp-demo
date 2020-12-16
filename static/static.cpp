@@ -1,7 +1,8 @@
 
-// Demonstrate what happens when you declare global variables and functions as static.
+// Demonstrate what happens when you declare variables and functions as static.
 // See here: https://www.youtube.com/watch?v=f3FVU-iwNuA&list=WL&index=64
 // And here: https://www.youtube.com/watch?v=V-BFlMrBtqQ&list=PLlrATfBNZ98dudnM48yfGUldqGD0S4FFb&index=22
+// And here: https://www.youtube.com/watch?v=f7mtWD9GdJ4&list=PLlrATfBNZ98dudnM48yfGUldqGD0S4FFb&index=23&t=1s
 
 #include <iostream>
 using std::cout;
@@ -18,26 +19,35 @@ extern int externally_linked;
 //extern int externally_linked_to_static;
 
 static int s_my_static;
-void FunctionWithStatic() {}
+void StaticFunction() {}
 
-
-struct Entity {
-
-  static int m_static;
-  int m_not_static;
+class Entity {
 
 public:
 
-  static void PrintStatic() { cout << m_static << endl; }
-  void PrintNonStatic() { cout << m_not_static << " " << m_static << endl; }
+  static int m_static;
+  int m_non_static;
 
-  // Static methods can't access not-static variables. It's basically equivalent 
-  // to writing a method outside of the struct.
-  //static void BadPrintStatic() { cout << m_not_static << endl; } // compile error
+  Entity() { m_static++; }
+
+  static void PrintStatic() { cout << "m_static = " << m_static << endl; }
+  void PrintNonStatic() { cout << m_non_static << " " << m_static << endl; }
+
+  // Static methods can't access non-static variables. Those variables are tied to 
+  // a specific instance, but static methods aren't parameterized by instances. 
+  // Declaring a method as static is almost equivalent to writing it in global scope.
+  //static void BadPrintStatic() { cout << m_non_static << endl; } // compile error
 };
 
-// Have to explicitly declare static variables within classes/structs.
-int Entity::m_static;
+// Have to explicitly declare static variables within classes/structs. Otherwise,
+// you'll get an unresolved external linker error.
+int Entity::m_static = 0;
+
+// Show what happens with static in a local scope.
+void FunctionWithLocalStatic() {
+  static int nCalls = 0; // only initialized the first time
+  cout << "Number of calls to FunctionWithLocalStatic() = " << ++nCalls << endl;
+}
 
 int main() {
 
@@ -48,17 +58,23 @@ int main() {
   //cout << externally_linked_to_static << endl;
   cout << "s_my_static = " << s_my_static << endl << endl; // prints 0
 
-
-  // For static variables within structs/classes, it can look like you're assigning
-  // to an instance, but really, you are assigning to variables at the class level.
-    
+  // Show what happens with static withing of classes/structs.
+  Entity::PrintStatic(); // 0
   Entity e1;
-  e1.m_static = 2; // Bad style! This is equivalent to Entity::m_static = 2;
-  e1.PrintStatic(); // 2
-
+  e1.PrintStatic(); // 1
   Entity e2;
-  e2.m_static = 5; // Bad style! This is equivalent to Entity::m_static = 5;
-  e2.PrintStatic(); // 5
+  e2.PrintStatic(); // 2
 
-  e1.PrintStatic(); // now 5
+  // Careful! Here, it looks like you're assigning to an instance, but you are 
+  // actually assigning to variables within the class/struct itself.
+  e2.m_static = 5; // equivalent to Entity::m_static = 5;
+  e2.PrintStatic(); // 5
+  e1.PrintStatic(); // 5!
+  Entity::PrintStatic(); // 5
+
+  // Show what happens with static in a local scope.
+  cout << endl;
+  FunctionWithLocalStatic();
+  FunctionWithLocalStatic();
+  FunctionWithLocalStatic();
 }
