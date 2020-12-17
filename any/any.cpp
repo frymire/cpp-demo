@@ -43,7 +43,7 @@ int main() {
   string& referenced = any_cast<string&>(data);
   cout << referenced << endl;
 
-  cout << "\nSet it as a TwoString instance to force dynamic memory allocation...\n";
+  cout << "\nSet it as a BigStruct instance to force dynamic memory allocation...\n";
   data = BigStruct{1ll, 2ll, 3ll, 4ll, 5ll, 6ll, 7ll, 8ll, 9ll, 10ll}; 
 
   cout << "\nCast and assign it, without copies...\n";
