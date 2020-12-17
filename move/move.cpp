@@ -1,6 +1,7 @@
 
-// Demo move semantics (new in C++11).
+// Demostrate move semantics (new in C++11).
 // See here: https://www.youtube.com/watch?v=ehMg6zvXuMY&t=31s
+// And here: https://www.youtube.com/watch?v=OWNeCTd7yQE&list=WL&index=19&t=1s
 
 #include <iostream>
 using std::cout;
@@ -22,11 +23,11 @@ public:
     printf("Created (size = %d)!\n", m_size);
   }
 
-  // Copy constructor
+  // Copy constructor (can pass an lvalue or rvalue parameter).
   MyString(const MyString& that) {
     m_size = that.m_size;
-    m_data = new char[m_size]; // need to allocate memory...
-    memcpy(m_data, that.m_data, m_size); // ...and copy everything into it
+    m_data = new char[m_size]; // allocate memory
+    memcpy(m_data, that.m_data, m_size); // copy everything into it
     printf("Copied (size = %d)!\n", m_size);
   }
 

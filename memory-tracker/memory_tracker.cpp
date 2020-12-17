@@ -1,9 +1,10 @@
 
+// Demonstrate a hack to monitor heap memory usage. 
+// See here: https://www.youtube.com/watch?v=sLlGEUO_EGE&list=WL&index=100
+
 #include <iostream>
 using std::cout;
 using std::endl;
-
-// Demonstrate a hack to monitor heap memory usage. See here: https://www.youtube.com/watch?v=sLlGEUO_EGE&list=WL&index=100
 
 struct AllocationMetrics {
   uint32_t total_bytes_allocated = 0;
