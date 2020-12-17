@@ -103,6 +103,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "variant", "variant\variant.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "any", "any\any.vcxproj", "{D9E598EC-EFC8-473F-85B2-81E5C1C2C0C0}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "evaluation-order", "evaluation-order\evaluation-order.vcxproj", "{B1C8FD31-835F-4738-91CC-5EFCD4284C23}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -511,6 +513,14 @@ Global
 		{D9E598EC-EFC8-473F-85B2-81E5C1C2C0C0}.Release|x64.Build.0 = Release|x64
 		{D9E598EC-EFC8-473F-85B2-81E5C1C2C0C0}.Release|x86.ActiveCfg = Release|Win32
 		{D9E598EC-EFC8-473F-85B2-81E5C1C2C0C0}.Release|x86.Build.0 = Release|Win32
+		{B1C8FD31-835F-4738-91CC-5EFCD4284C23}.Debug|x64.ActiveCfg = Debug|x64
+		{B1C8FD31-835F-4738-91CC-5EFCD4284C23}.Debug|x64.Build.0 = Debug|x64
+		{B1C8FD31-835F-4738-91CC-5EFCD4284C23}.Debug|x86.ActiveCfg = Debug|Win32
+		{B1C8FD31-835F-4738-91CC-5EFCD4284C23}.Debug|x86.Build.0 = Debug|Win32
+		{B1C8FD31-835F-4738-91CC-5EFCD4284C23}.Release|x64.ActiveCfg = Release|x64
+		{B1C8FD31-835F-4738-91CC-5EFCD4284C23}.Release|x64.Build.0 = Release|x64
+		{B1C8FD31-835F-4738-91CC-5EFCD4284C23}.Release|x86.ActiveCfg = Release|Win32
+		{B1C8FD31-835F-4738-91CC-5EFCD4284C23}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
