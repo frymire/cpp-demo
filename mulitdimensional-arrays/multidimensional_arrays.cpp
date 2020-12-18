@@ -67,6 +67,7 @@ int main() {
 
   // This typical design means that each row is likely stored in different memory locations
   // leading to cache misses when accessing different rows.
+
   int* row_major = new int[2*3];
   for (int i = 0; i < 2; i++) {
     for (int j = 0; j < 3; j++) {
