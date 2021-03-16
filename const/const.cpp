@@ -37,25 +37,25 @@ int main() {
   
   const int MAX_AGE = 90;
 
-  // Pointer to a const int, two ways. The contents pointed to can't change.
-  // The key is that const is before the pointer sign *, making the *pointer* constant.
+  // If you put const before the pointer sign *, the contents pointed to can't change.
+  // You can do it two equivalent ways...
   const int* ptr1 = new int(1);
   int const* ptr2 = new int(2);
   cout << *ptr1 << endl;
   cout << *ptr2 << endl;
   //*ptr1 = 10; // compile error, can't change the contents 
 
-  // It's possible to change what the pointer points to. 
+  // It's possible to change the address that pointer points to. 
   ptr1 = (int*) &MAX_AGE;
   cout << *ptr1 << endl;
+  //*ptr1 = 10; // compile error, still can't change the contents 
 
-  // Const pointer to int. The contents can change, the pointer cannot.
-  // Here, const is after the pointer sign *, making the contents constant.
+  // If you put const after the pointer sign *, the pointer cannot change, but the contents can.
   int* const ptr3 = new int(3);
   cout << *ptr3 << endl; 
   *ptr3 = 30;
   cout << *ptr3 << endl;
-  //ptr3 = (int*) &MAX_AGE; // compile error, can't change the pointer value
+  //ptr3 = (int*) &MAX_AGE; // compile error, can't change the pointer address
 
   // Const pointer to const int. Can't change either.
   const int* const ptr4 = new int(4);
