@@ -45,7 +45,7 @@ int main() {
   cout << *ptr2 << endl;
   //*ptr1 = 10; // compile error, can't change the contents 
 
-  // It's possible to change the address that pointer points to. 
+  // It's possible to change the address that the pointer points to. 
   ptr1 = (int*) &MAX_AGE;
   cout << *ptr1 << endl;
   //*ptr1 = 10; // compile error, still can't change the contents 

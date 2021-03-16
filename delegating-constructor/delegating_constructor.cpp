@@ -7,10 +7,8 @@ using std::cout;
 using std::endl;
 
 class Foo {
-
   char m_x;
   int m_y;
-
 public:
   Foo(char x, int y) : m_x(x), m_y(y) {}
   Foo(int y) : Foo('Z', y) {} // C++11

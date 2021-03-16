@@ -13,7 +13,6 @@ enum FiveBasedIntEnum { X = 5, Y, Z }; // 5, 6, 7
 // Can use a different type (here an 8-bit char, rather than 32-bit int)
 enum CharEnum: char { i1 = 'M', i2 = 'E', i3 = 'F' };
 
-
 int main() {
 
   Level value1 = Info;
