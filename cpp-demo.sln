@@ -109,6 +109,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mulitdimensional-arrays", "
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "volatile", "volatile\volatile.vcxproj", "{738CD473-8CD2-402C-8FBD-167AC5FFE119}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "files", "files\files.vcxproj", "{AF1AC659-73C2-47A3-8D0E-FF86EE4D354F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -541,6 +543,14 @@ Global
 		{738CD473-8CD2-402C-8FBD-167AC5FFE119}.Release|x64.Build.0 = Release|x64
 		{738CD473-8CD2-402C-8FBD-167AC5FFE119}.Release|x86.ActiveCfg = Release|Win32
 		{738CD473-8CD2-402C-8FBD-167AC5FFE119}.Release|x86.Build.0 = Release|Win32
+		{AF1AC659-73C2-47A3-8D0E-FF86EE4D354F}.Debug|x64.ActiveCfg = Debug|x64
+		{AF1AC659-73C2-47A3-8D0E-FF86EE4D354F}.Debug|x64.Build.0 = Debug|x64
+		{AF1AC659-73C2-47A3-8D0E-FF86EE4D354F}.Debug|x86.ActiveCfg = Debug|Win32
+		{AF1AC659-73C2-47A3-8D0E-FF86EE4D354F}.Debug|x86.Build.0 = Debug|Win32
+		{AF1AC659-73C2-47A3-8D0E-FF86EE4D354F}.Release|x64.ActiveCfg = Release|x64
+		{AF1AC659-73C2-47A3-8D0E-FF86EE4D354F}.Release|x64.Build.0 = Release|x64
+		{AF1AC659-73C2-47A3-8D0E-FF86EE4D354F}.Release|x86.ActiveCfg = Release|Win32
+		{AF1AC659-73C2-47A3-8D0E-FF86EE4D354F}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
