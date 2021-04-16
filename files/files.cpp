@@ -1,5 +1,5 @@
 
-#pragma warning (disable : 4996)
+#pragma warning (disable : 4996) // to use potentially unsafe *scanf function
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -19,13 +19,12 @@ int main() {
   // Read a line of values individually
   int n1, n2, n3;
   fscanf(p_file, "%d,%d,%d", &n1, &n2, &n3);
-  printf("Value of n = %d %d %d\n", n1, n2, n3);
+  printf("n1 = %d, n2 = %d, n3 = %d\n", n1, n2, n3);
 
   // Read into a struct.
   Triple my_triple;
-  while (!feof(p_file)) {
-    fscanf(p_file, "%d,%d,%d", &my_triple.n1, &my_triple.n2, &my_triple.n3);
-    printf("Value of my_triple = %d %d %d\n", my_triple.n1, my_triple.n2, my_triple.n3);
+  while (fscanf(p_file, "%d,%d,%d", &my_triple.n1, &my_triple.n2, &my_triple.n3) == 3) {
+    printf("my_triple = %d %d %d\n", my_triple.n1, my_triple.n2, my_triple.n3);
   }
 
   fclose(p_file);
