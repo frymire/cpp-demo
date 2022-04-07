@@ -1,7 +1,7 @@
 
 // Demonstrate bitwise and binary operators.
 // See here: https://www.youtube.com/watch?v=KXwRt7og0gI&list=WL&index=46
-// ...and here: https://www.youtube.com/watch?v=HoQhw6_1NAA
+// ...here: https://www.youtube.com/watch?v=HoQhw6_1NAA
 
 #include <iostream>
 using std::cout;
