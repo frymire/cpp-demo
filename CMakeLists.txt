@@ -18,7 +18,7 @@ add_executable(doubly_linked_list
     modules/doubly-linked-list/doubly_linked_list.cpp
     modules/doubly-linked-list/main.cpp)
 
-# shared-library
+# shared library (Linux) / dynamic link library (Windows)
 add_library(shared_library SHARED modules/shared-library/shared_library.cpp modules/shared-library/shared_library.h)
 target_include_directories(shared_library PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/modules/shared-library)
 add_executable(shared_library_app modules/shared-library-app/shared_library_app.cpp)
