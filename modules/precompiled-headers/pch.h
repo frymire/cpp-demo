@@ -23,7 +23,12 @@
 #include <unordered_set>
 #include <unordered_map>
 
-#include <Windows.h>
+// Remove Windows-specific headers for Linux.
+#ifdef _WIN32
+  #include <Windows.h>
+#else
+  // If needed, add POSIX or Linux-specific includes here.
+#endif
 
 // You can also include non-C-standard libraries here, provided you aren't going
 // to change them.

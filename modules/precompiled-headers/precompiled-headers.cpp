@@ -3,7 +3,13 @@
 // See here: https://www.youtube.com/watch?v=trMdw6tCHlY
 // And here: https://www.youtube.com/watch?v=eSI4wctZUto&list=PLlrATfBNZ98dudnM48yfGUldqGD0S4FFb&index=72&t=2s
 
-// Project Setup...
+// With CMake, you don't need to do much. After you build the first time, look in the build directory...
+//   cmake-build-debug/CMakeFiles/precompiled-headers.dir/
+// The .gch file is the binary, so you can monitor when it is recreated. Experiment by commenting this line in
+// CMakeLists.txt
+//  target_precompile_headers(precompiled-headers PRIVATE modules/precompiled-headers/pch.h)
+
+// With Visual Studio...
 // Go to Project Properties -> C/C++ -> Precompiled Headers
 //   - Platform: 'All Platforms'
 //   - Configuration: All Configurations
@@ -28,5 +34,5 @@ using std::cout;
 using std::endl;
 
 int main() {
-  cout << "Hello World! " << endl;
+  cout << "Hello, world!" << endl;
 }

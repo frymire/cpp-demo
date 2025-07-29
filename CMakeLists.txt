@@ -55,7 +55,11 @@ add_executable(operator_overload modules/operator-overload/operator_overload.cpp
 add_executable(optional modules/optional/optional.cpp)
 add_executable(pointers modules/pointers/pointers.cpp)
 add_executable(popcount modules/popcount/popcount.cpp)
-# precompiled-headers only with MSVC
+
+# precompiled-headers
+add_executable(precompiled-headers modules/precompiled-headers/precompiled-headers.cpp)
+target_precompile_headers(precompiled-headers PRIVATE modules/precompiled-headers/pch.h)
+
 add_executable(project_configuration modules/project-configuration/project_configuration.cpp)
 add_executable(references modules/references/references.cpp)
 add_executable(scope modules/scope/scope.cpp)
