@@ -87,6 +87,7 @@ add_executable(type_parameter_extension modules/type-parameter-extension/type_pa
 add_executable(unions modules/unions/unions.cpp)
 add_executable(variant modules/variant/variant.cpp)
 add_executable(virtual_functions modules/virtual-functions/virtual-functions.cpp)
+add_executable(virtual-member-variables modules/virtual-member-variables/virtual_member_variables.cpp)
 
 # This compiles, but doesn't do anything anymore. Google Chrome also warns you that it's not supported.
 add_executable(visual_benchmarking
