@@ -27,6 +27,7 @@ target_link_libraries(shared_library_app PRIVATE shared_library)
 add_executable(enum modules/enum/enum.cpp)
 add_executable(evaluation_order modules/evaluation-order/evaluation_order.cpp)
 add_executable(exceptions modules/exceptions/exceptions.cpp)
+add_executable(expected modules/expected/expected.cpp)
 add_executable(files modules/files/files.cpp)
 add_executable(function_pointers modules/function-pointers/function_pointers.cpp)
 
