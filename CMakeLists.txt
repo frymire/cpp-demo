@@ -29,6 +29,7 @@ add_executable(evaluation_order modules/evaluation-order/evaluation_order.cpp)
 add_executable(exceptions modules/exceptions/exceptions.cpp)
 add_executable(expected modules/expected/expected.cpp)
 add_executable(files modules/files/files.cpp)
+add_executable(format modules/format/format.cpp)
 add_executable(function_pointers modules/function-pointers/function_pointers.cpp)
 
 add_executable(hash_table
