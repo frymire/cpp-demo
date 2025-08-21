@@ -21,7 +21,7 @@ public:
     return m_X;
   }
 
-  int SetX(int x) { m_X = x; }
+  void SetX(int x) { m_X = x; }
 
   int NumGetCalls() { return m_nGetCalls; }
 };

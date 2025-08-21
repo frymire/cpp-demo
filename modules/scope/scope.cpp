@@ -15,36 +15,36 @@
 // to that array. But once we leave the scope of this function, since the 
 // array was created on the stack, stackArray is deleted automatically.
 int* BadArrayCreateFunction() {
-  int stackArray[3] = {1, 2, 3};
-  return stackArray; // causes warning C4172: returning address of local variable or temporary
+  int stack_array[3] = {1, 2, 3};
+  return stack_array; // causes warning C4172: returning address of local variable or temporary
 }
 
 // Instead, allocate the data on the heap.
 int* GoodArrayCreateFunction() {
-  int* heapArray = new int[3];
-  heapArray[0] = 4;
-  heapArray[1] = 5;
-  heapArray[2] = 6;
-  return heapArray; 
+  int* heap_array = new int[3];
+  heap_array[0] = 4;
+  heap_array[1] = 5;
+  heap_array[2] = 6;
+  return heap_array;
 }
 
 int main() {
 
-  int* badArray = BadArrayCreateFunction();
+  int* bad_array = BadArrayCreateFunction();
   
   // The memory locations where badArray was stored have been now freed, and the data may be
   // overwritten with new data. Insidiously, you probably think the code is fine 
   // because it probably prints the right answer with this next call immediately after
   // the function returns. However, this is simply because nothing else has happened
   // on the stack yet that would overwrite the data.
-  printf("%d %d %d\n", badArray[0], badArray[1], badArray[2]);  // segfaults here on Linux
+  printf("%d %d %d\n", bad_array[0], bad_array[1], bad_array[2]);  // segfaults here on Linux
 
-  int* goodArray = GoodArrayCreateFunction();
-  printf("%d %d %d\n", goodArray[0], goodArray[1], goodArray[2]);
+  int* good_array = GoodArrayCreateFunction();
+  printf("%d %d %d\n", good_array[0], good_array[1], good_array[2]);
 
   // By now, the stack has grown past where the data for badArray were stored originally,
   // so now this same call as before results in gibberish...a silent runtime error.
-  printf("%d %d %d\n", badArray[0], badArray[1], badArray[2]);
+  printf("%d %d %d\n", bad_array[0], bad_array[1], bad_array[2]);
 
-  delete(goodArray);
+  delete(good_array);
 }

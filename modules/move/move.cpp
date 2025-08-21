@@ -23,7 +23,7 @@ public:
     m_size = strlen(str);
     m_data = new char[m_size];
     memcpy(m_data, str, m_size);
-    printf("Created (size = %d)!\n", m_size);
+    printf("Created (size = %zu)!\n", m_size);  // %zu is for size_t
   }
 
   // Copy constructor (can pass an lvalue or rvalue parameter).
@@ -31,7 +31,7 @@ public:
     m_size = that.m_size;
     m_data = new char[m_size]; // allocate memory
     memcpy(m_data, that.m_data, m_size); // copy everything into it
-    printf("Copied (size = %d)!\n", m_size);
+    printf("Copied (size = %zu)!\n", m_size);
   }
 
   // Move constructor (requires rvalue parameter).
@@ -45,12 +45,12 @@ public:
     that.m_size = 0;
     that.m_data = nullptr;
 
-    printf("Moved (size = %d)!\n", m_size);
+    printf("Moved (size = %zu)!\n", m_size);
   }
 
   ~MovableString() { 
     delete m_data; 
-    printf("Destroyed (size = %d)!\n", m_size);
+    printf("Destroyed (size = %zu)!\n", m_size);
   }
 
   MovableString& operator=(MovableString&& that) noexcept {
@@ -60,14 +60,14 @@ public:
 
     // First, delete data for the current MovableString.
     delete[] m_data;
-    printf("Deleted data (size = %d)!\n", m_size);
+    printf("Deleted data (size = %zu)!\n", m_size);
 
     // Then, do the same steps as in the move constructor...
     m_size = that.m_size;
     m_data = that.m_data;
     that.m_size = 0;
     that.m_data = nullptr;
-    printf("Moved (size = %d)!\n", m_size);
+    printf("Moved (size = %zu)!\n", m_size);
 
     return *this;
   }
