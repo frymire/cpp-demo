@@ -3,6 +3,12 @@ project(cpp-demo)
 
 set(CMAKE_CXX_STANDARD 23)
 
+# Put all build products under the chosen build dir
+# e.g. cmake-build-debug/bin, cmake-build-debug/lib
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+
 add_executable(any modules/any/any.cpp)
 add_executable(arrays modules/arrays/arrays.cpp)
 add_executable(async modules/async/async.cpp)
