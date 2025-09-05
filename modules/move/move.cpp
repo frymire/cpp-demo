@@ -1,6 +1,7 @@
 // Demonstrate move semantics (new in C++11).
 // See here: https://www.youtube.com/watch?v=ehMg6zvXuMY&t=31s
 // And here: https://www.youtube.com/watch?v=OWNeCTd7yQE&list=WL&index=19&t=1s
+// And here: https://www.youtube.com/watch?v=6SaUwqw4ueE&list=WL&index=2&t=4s
 
 #include <cstring>
 #include <iostream>
@@ -133,5 +134,28 @@ int main() {
   source4.print(); // empty data, but still a valid MovableString
   existing_string.print();
 
-  cout << "\nCall destructors...\n";
+  cout << "\nDemonstrate why you should generally avoid std::move...\n\n";
+
+  {
+    cout << "Create 2, copy 2 into the array, and destroy 4." << endl;
+    MovableString s1("1");
+    MovableString s2("2");
+    std::array strings{s1, s2};
+  }
+
+  {
+    cout << "\nCreate 2, move 2, but still destroy 4 (!), since std::move leaves behind hallow (size = 0) objects.\n";
+    MovableString s1("1");
+    MovableString s2("2");
+    std::array strings{std::move(s1), std::move(s2)};
+  }
+
+  {
+    // Lambda helper uses named RVO with copy/move elision rules to write return values directly into caller storage.
+    auto make_string = [](const char *str) { MovableString s(str); /* ...other stuff... */; return s; };
+    cout << "\nCreate 2, destroy 2. Named RVO avoids creation of temporaries in the lambda.\n";
+    std::array strings{make_string("1"), make_string("2")};
+  }
+
+  cout << "\nCall remaining destructors...\n";
 }
