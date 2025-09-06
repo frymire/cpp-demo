@@ -105,3 +105,5 @@ add_executable(visual_benchmarking
     modules/visual-benchmarking/visual_benchmarking.cpp)
 
 add_executable(volatile modules/volatile/volatile.c)
+add_executable(weak-pointers modules/weak-pointers/weak_pointers.cpp)
+add_executable(weak-pointers-cyclical modules/weak-pointers-cyclical/weak_pointers_cyclical.cpp)
