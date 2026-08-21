@@ -35,11 +35,11 @@ public:
   }
 };
 
-void VertexFunctionByValue(vector<Vertex> vertices) {
+void print_vertices_by_value(vector<Vertex> vertices) {
   for (Vertex& v : vertices) { v.print(); }
 }
 
-void VertexFunctionByReference(vector<Vertex>& vertices) {
+void print_vertices_by_reference(vector<Vertex>& vertices) {
   for (Vertex& v : vertices) { v.print(); }
 }
 
@@ -124,10 +124,10 @@ int main() {
   for (Vertex& v: naive_vertices) { cout << v << endl; }
 
   cout << "\nPass a vector to a function by value, copying it unnecessarily...\n";
-  VertexFunctionByValue(naive_vertices);
+  print_vertices_by_value(naive_vertices);
 
   cout << "\nPass a vector to a function by reference, with no additional copies...\n";
-  VertexFunctionByReference(naive_vertices);
+  print_vertices_by_reference(naive_vertices);
   
   cout << "\nPre-allocate 3 entries, and build with push_back()...\n";
   vector<Vertex> better_vertices;
