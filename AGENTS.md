@@ -1,6 +1,6 @@
 # cpp-demo
 
-Collection of ~60 self-contained C++ example programs (one per feature) under `modules/`, plus two library-linking demos, all driven by the single root `CMakeLists.txt`. There is no product/service, database, server, or automated test suite — "running" means compiling the targets and executing the individual console binaries.
+Collection of ~60 self-contained C++ example programs (one per feature) under `modules/`, plus two library-linking demos. The modules are grouped into numbered phase directories (`modules/01-basics` through `modules/08-build-and-project`) that form a phased introduction to C++; each phase directory has its own `CMakeLists.txt`, and the root `CMakeLists.txt` pulls them in with `add_subdirectory`. There is no product/service, database, server, or automated test suite — "running" means compiling the targets and executing the individual console binaries.
 
 ## Cursor Cloud specific instructions
 
@@ -8,6 +8,6 @@ Collection of ~60 self-contained C++ example programs (one per feature) under `m
 - Configure + build (out-of-source):
   - `cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_COMPILER=gcc-14 -DCMAKE_CXX_COMPILER=g++-14`
   - `cmake --build build -j"$(nproc)"`
-- Executables land in `build/bin/`; the two demo libraries in `build/lib/`. Run e.g. `./build/bin/hello`.
-- Path gotcha: the `files` and `optional` demos open `../resources/*.txt` with a relative path, so run them from inside the `build/` directory (`cd build && ./bin/files`). Running from the repo root fails with "Error opening file."
+- Build products mirror the source tree inside the build directory: each target lands in `build/modules/<phase>/<module>/`, e.g. `build/modules/01-basics/hello/hello`. The shared-library demo copies its library next to `shared_library_app` after each build.
+- Path gotcha: the `files` and `optional` demos open `../resources/*.txt` with a relative path, so run them from inside the `build/` directory (`cd build && ./modules/01-basics/files/files`). Running from the repo root fails with "Error opening file."
 - No lint or test tooling is configured; there is nothing to run beyond compiling and executing the example binaries.
