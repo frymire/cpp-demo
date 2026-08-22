@@ -1,4 +1,5 @@
 
+// ReSharper disable CppPassValueParameterByConstReference
 #include <cstring>
 
 #include <iostream>
@@ -6,58 +7,60 @@ using std::cout;
 using std::endl;
 using std::ostream;
 
-struct Vector2D { 
-  float x, y;  
-  void print() { cout << x << " " << y << endl; }
-};
+namespace {
 
-class MyString {
+  struct Vector2D {
+    float x, y;
+    void print() const { cout << x << " " << y << endl; }
+  };
 
-private: 
-  
-  char* m_buffer;
-  unsigned int m_size;
+  class MyString {
 
-public:
+    char* m_buffer;
+    unsigned int m_size;
 
-  MyString(const char* string) {
-    m_size = strlen(string);
-    m_buffer = new char[m_size + 1];
-    memcpy(m_buffer, string, m_size);
-    m_buffer[m_size] = 0;
-  }
+  public:
 
-  // The implicit copy constructor makes a shallow copy of the member variables. It would look like...
-  //MyString(const MyString& that): m_buffer(that.m_buffer), m_size(that.m_size) {}
+    MyString(const char* string) {
+      m_size = strlen(string);
+      m_buffer = new char[m_size + 1];
+      memcpy(m_buffer, string, m_size);
+      m_buffer[m_size] = 0;
+    }
 
-  // You could delete the copy constructor to prevent copies altogether.
-  //MyStringNoCopy(const MyString& that) = delete;
+    // The implicit copy constructor makes a shallow copy of the member variables. It would look like...
+    //MyString(const MyString& other): m_buffer(other.m_buffer), m_size(other.m_size) {}
 
-  // Deep copy constructor.
-  MyString(const MyString& that): m_size(that.m_size) {
-    m_buffer = new char[m_size + 1];
-    memcpy(m_buffer, that.m_buffer, m_size);
-    m_buffer[m_size] = 0;
-    cout << "Copied MyString instance.\n";
-  }
+    // You could delete the copy constructor to prevent copies altogether.
+    //MyStringNoCopy(const MyString& other) = delete;
 
-  ~MyString() { delete[] m_buffer; }
+    // Deep copy constructor.
+    MyString(const MyString& other): m_size(other.m_size) {
+      m_buffer = new char[m_size + 1];
+      memcpy(m_buffer, other.m_buffer, m_size);
+      m_buffer[m_size] = 0;
+      cout << "Copied MyString instance.\n";
+    }
 
-  // If a shallow copied MyString instance goes out of scope after the destructor is called on any 
-  // previous instance, the delete[] call would cause an error. Break the link to avoid that.
-  void ClearBufferLink() { m_buffer = nullptr; }
+    ~MyString() { delete[] m_buffer; }
 
-  char& operator[](unsigned int index) { return m_buffer[index]; }
+    // If a shallow copied MyString instance goes out of scope after the destructor is called on any
+    // previous instance, the delete[] call would cause an error. Break the link to avoid that.
+    [[maybe_unused]] void clear_buffer_link() { m_buffer = nullptr; }
 
-  friend ostream& operator<<(ostream& stream, const MyString& string) {
-    return stream << string.m_buffer;
-  }
-};
+    char& operator[](const unsigned int index) const { return m_buffer[index]; }
 
-// If you call a function with MyString as a pass-by-value parameter, the copy constructor 
-// is called. Pass by reference to avoid that when possible.
-void PrintByValue(MyString string) { cout << string << endl; }
-void PrintByReference(const MyString& string) { cout << string << endl; }
+    friend ostream& operator<<(ostream& stream, const MyString& string) {
+      return stream << string.m_buffer;
+    }
+  };
+
+  // If you call a function with MyString as a pass-by-value parameter, the copy constructor
+  // is called. Pass by reference to avoid that when possible.
+  void print_by_value(MyString string) { cout << string << endl; }
+  void print_by_reference(const MyString& string) { cout << string << endl; }
+
+} // namespace
 
 int main() {
 
@@ -66,17 +69,17 @@ int main() {
   b1.x = 5;
   a1.print(); // still 1 2
 
-  Vector2D* a2 = new Vector2D({1, 2});
+  Vector2D* a2 = new Vector2D{1, 2};
   Vector2D* b2 = a2; // copies address of a2 to b2
   b2->x = 5;
   a2->print(); // now 5 2
 
   cout << "\nMake a string...\n";
-  MyString original = "Mark";
+  const MyString original = "Mark";
   cout << original << endl;
 
   cout << "\nMake a copy...\n";
-  MyString copy = original; // compile error if copy constructor is deleted
+  const MyString copy = original; // compile error if copy constructor is deleted
 
   // With the default copy constructor, declaring a second string that copies
   // the original only copies the primitive member variables. That gives us two pointers 
@@ -88,9 +91,9 @@ int main() {
   cout << copy << endl; // Mork
 
   cout << "\nPass by value...\n";
-  PrintByValue(original);
+  print_by_value(original);
   cout << "\nPass by reference...\n";
-  PrintByReference(original);
+  print_by_reference(original);
 
   // If we were using the default copy constructor, the data created on the heap for 
   // original.m_buffer gets deleted when the destructor is called by original. The subsequent 

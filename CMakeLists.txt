@@ -3,6 +3,13 @@ project(cpp-demo)
 
 set(CMAKE_CXX_STANDARD 23)
 
+# The C++23 <print> header needs the terminal helpers in libstdc++exp on MinGW. Optimized
+# builds inline std::vprint_unicode into the object file, so the reference only shows up at
+# link time in Release, not Debug.
+if (MINGW)
+  link_libraries(stdc++exp)
+endif()
+
 # Demos that read files under resources/ use this to build an absolute path,
 # so they run correctly from any working directory.
 add_compile_definitions(PROJECT_ROOT="${CMAKE_SOURCE_DIR}")
