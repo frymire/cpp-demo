@@ -27,11 +27,15 @@ namespace {
   class Player: public Entity {};
   class Enemy: public Entity {};
 
+  // An old-style API that takes a non-const pointer, even though it only reads.
+  void print_message(char* message) { cout << message << endl; }
+
   // Don't pass the unique pointer here. This function just wants a view, not full ownership.
   void print_entity_is_player(Entity* e) {
 
-    // dynamic_cast: evaluate at run-time whether a polymorphic base class pointer points to an
-    // instance of a particular derived type. If so, return a valid pointer, otherwise nullptr.
+    // dynamic_cast: evaluate at run-time whether a polymorphic base class pointer points to an instance of a
+    // particular derived type. If so, return a valid pointer, otherwise nullptr. Note that the type parameter passed
+    // to the dynamic_cast must be polymorphic or the call doesn't make sense and a compile time error occurs.
     Player* p = dynamic_cast<Player*>(e);
     cout << ((p != nullptr) ? "true" : "false") << endl;
 
@@ -59,9 +63,34 @@ int main() {
   //double s2 = static_cast<Entity>(value); // compile error, can't cast a double as an Entity.
 
   // reinterpret: perform type punning to treat a memory block as a different type
-  Enemy* s2 = reinterpret_cast<Enemy*>(&value);
+  [[maybe_unused]] Enemy* s2 = reinterpret_cast<Enemy*>(&value);
 
-  // TODO: const: add or remove const-ness
+  // const: add or remove const-ness. This is the only cast that can change const, and it
+  // cannot change the underlying type.
+
+  // Adding const never needs a cast, because it is always safe. The compiler does it for
+  // you, so this line only documents the intent.
+  const double* p_read_only = const_cast<const double*>(&value);
+  cout << *p_read_only << endl; // 5.25
+
+  // Removing const is well defined as long as the object itself is not const. Here, value
+  // is a plain double, so writing through the stripped pointer is legal.
+  double* p_writable = const_cast<double*>(p_read_only);
+  *p_writable = 7.5;
+  cout << value << endl; // 7.5
+
+  // The main legitimate use: call an old API that takes a non-const pointer, even though
+  // it only reads. Removing const to READ is always safe.
+  const char* greeting = "Hello, from a const char pointer.";
+  print_message(const_cast<char*>(greeting));
+
+  // Removing const from an object that really is const gives undefined behavior as soon as
+  // you write through the pointer. The compiler trusts the const, so it may keep the old
+  // value, or it may put the object in read-only memory and crash. Never do this.
+  const int kMax = 10;
+  int* p_max = const_cast<int*>(&kMax);
+  *p_max = 20;
+  cout << kMax << " " << *p_max << " (undefined behavior)" << endl; // prints "10 20" with this compiler
 
   // dynamic_cast: evaluate at run-time whether a polymorphic base class pointer points
   // to an instance of a particular derived type.
