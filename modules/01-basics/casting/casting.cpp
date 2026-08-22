@@ -87,7 +87,7 @@ int main() {
   // Removing const from an object that really is const gives undefined behavior as soon as
   // you write through the pointer. The compiler trusts the const, so it may keep the old
   // value, or it may put the object in read-only memory and crash. Never do this.
-  const int kMax = 10;
+  constexpr int kMax = 10;
   int* p_max = const_cast<int*>(&kMax);
   *p_max = 20;
   cout << kMax << " " << *p_max << " (undefined behavior)" << endl; // prints "10 20" with this compiler
