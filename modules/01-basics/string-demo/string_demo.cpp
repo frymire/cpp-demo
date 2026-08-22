@@ -17,27 +17,28 @@ using namespace std::string_literals; // R"(...)"
 using std::string_view;
 
 // Override new so that we can see memory allocations for demo purposes.
-static uint32_t s_AllocCount = 0;
+static int s_num_allocations = 0;
 void* operator new(size_t size) {
-  cout << "Allocating " << size << " bytes, " << ++s_AllocCount << " allocations total.\n";
+  cout << "Allocating " << size << " bytes, " << ++s_num_allocations << " allocations total.\n";
   return malloc(size);
 }
 
-void PrintName(const string& name) { cout << name << endl; }
-
-void PrintNameStringView(string_view name) { cout << name << endl; }
+namespace {
+  void print_name(const string& name) { cout << name << endl; }
+  // Use string_view for function parameters you only read and do not keep
+  void print_name_string_view(const string_view name) { cout << name << endl; }
+}
 
 int main() {
 
   // Specify a multi-line string with R"({your text})".
-  const char* multi_line_string = 
+  const char* multi_line_string =
 R"(Line1
 Line2
 Line3
 Line4)";
   cout << multi_line_string << endl;
 
-  
   // Small string optimization: For 15 characters or less, std::string allocates on the stack
   // Run in release mode, since debug allocates 16 bytes for its purposes.
 
@@ -47,13 +48,13 @@ Line4)";
   string short_name = "Mark Frymire..."; // stack
   cout << short_name << endl;
 
-  PrintName("Mark Frymire..."); // stack
+  print_name("Mark Frymire..."); // stack
 
   cout << "\nMake a string at least 16 characters long...\n";
   string long_name = "Mark Frymire...."; // heap
   cout << long_name << endl;
- 
-  PrintName("Mark Frymire...."); // heap
+
+  print_name("Mark Frymire...."); // heap
 
   cout << "\nExtract substrings...\n";
   string full_name = "Mark Edward Frymire"; // heap
@@ -71,5 +72,19 @@ Line4)";
   cout << string_view(char_star_name + 1, 16) << endl;
 
   cout << "\nAvoid heap allocation when calling functions with string_view parameter...\n";
-  PrintNameStringView("Mark Frymire....");
+  print_name_string_view("Mark Frymire....");
+
+  cout << "\nString views can be risky, because they are non-owning...\n";
+  const string name = "Mark";
+  const string_view sv1 = string("hello");  // temporary dies at semicolon
+  const string_view sv2 = name + " Frymire";  // same for concatenation
+  cout << sv1 << " <-- UB, references freed memory\n";  // undefined behavior
+  cout << sv2 << " <-- UB, references freed memory\n";  // undefined behavior
+
+  cout << "\nString views may dangle even while the source object is still alive...\n";
+  std::string hello = "hello";
+  std::string_view hello_sv = hello;
+  hello += " world and a much longer tail"; // may reallocate
+  cout << hello_sv; // sv points at the freed old buffer
+
 }
