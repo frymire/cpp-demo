@@ -3,6 +3,10 @@ project(cpp-demo)
 
 set(CMAKE_CXX_STANDARD 23)
 
+# Demos that read files under resources/ use this to build an absolute path,
+# so they run correctly from any working directory.
+add_compile_definitions(PROJECT_ROOT="${CMAKE_SOURCE_DIR}")
+
 # Every target is declared through the helpers below, which place its build
 # products in a build-tree directory that mirrors its source directory,
 # e.g. <build>/modules/01-basics/hello/hello.exe.

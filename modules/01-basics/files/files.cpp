@@ -1,32 +1,64 @@
 
 #pragma warning (disable : 4996) // to use potentially unsafe *scanf function
 
-#include <stdio.h>
-#include <stdlib.h>
+#include <iostream>
+using std::cout;
+using std::endl;
 
-struct Triple {
-  int n1, n2, n3;
-};
+#include <stdio.h>
+
+#include <memory>
+using std::unique_ptr;
+using std::make_unique;
+
+#include <fstream>
+using std::ifstream;
+
+namespace {
+
+  struct Triple {
+    int x, y, z;
+    void print() const { printf("%d %d %d\n", x, y, z); }
+  };
+
+  struct FileCloser { void operator()(FILE* f) const { cout << "FileCloser closing file.\n"; fclose(f); } };
+
+}
 
 int main() {
 
-  FILE* p_file = fopen("../resources/files data.txt", "r");
+  // PROJECT_ROOT is defined in the top-level CMakeLists.txt file, and putting two strings together concatenates them.
+  const char* path = PROJECT_ROOT "/resources/files data.txt";
+  Triple t;
+
+  cout << "\nWithout RAII...\n";
+  FILE* p_file = fopen(path, "r");
   if(!p_file) {
     printf("Error opening file.\n");
-    exit(1);
+    return 1;  // don't use exit(1), it doesn't unwind the stack, RAII is bypassed
   }
-
-  // Read a line of values individually
-  int n1, n2, n3;
-  fscanf(p_file, "%d,%d,%d", &n1, &n2, &n3);
-  printf("n1 = %d, n2 = %d, n3 = %d\n", n1, n2, n3);
-
-  // Read into a struct.
-  Triple my_triple;
-  while (fscanf(p_file, "%d,%d,%d", &my_triple.n1, &my_triple.n2, &my_triple.n3) == 3) {
-    printf("my_triple = %d %d %d\n", my_triple.n1, my_triple.n2, my_triple.n3);
-  }
-
+  while (fscanf(p_file, "%d,%d,%d", &t.x, &t.y, &t.z) == 3) { t.print(); }
+  cout << "Closing file directly.\n";
   fclose(p_file);
+
+  cout << "\nWith RAII, by overriding the unique pointer default deleter...\n";
+  const unique_ptr<FILE, FileCloser> file(fopen(path, "r"));  // can't use make_unique with a custom deleter
+  if(!file) {
+    printf("Error opening file.\n");
+    return 1;
+  }
+  while (fscanf(file.get(), "%d,%d,%d", &t.x, &t.y, &t.z) == 3) { t.print(); }
+
+  cout << "\nWith ifstream, which is inherently RAII...\n";
+  ifstream file_stream(path);
+  if(!file_stream) {
+    printf("Error opening file.\n");
+    return 1;
+  }
+  char comma;
+  while (file_stream >> t.x >> comma >> t.y >> comma >> t.z) { t.print(); }
+
+  cout << endl;
+  cout << "ifstream closes file automatically.\n";
   return 0;
 }

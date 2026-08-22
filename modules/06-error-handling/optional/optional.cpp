@@ -36,7 +36,7 @@ optional<string> ReadFileAsString(const string & filepath) {
 }
 
 
-void PrintData(optional<string> data) {
+void print_data(optional<string> data) {
 
   if (data) { // or more explicitly, data.has_value()
     cout << "File read successfully. Printing three ways...\n\n";
@@ -52,10 +52,10 @@ void PrintData(optional<string> data) {
 
 int main() {
 
-  optional<string> data = ReadFileAsString("../resources/optional data.txt");
-  PrintData(data);
+  optional<string> data = ReadFileAsString(PROJECT_ROOT "/resources/optional data.txt");
+  print_data(data);
   cout << endl;
 
   optional<string> missing_data = ReadFileAsString("missing_data.txt");
-  PrintData(missing_data);
+  print_data(missing_data);
 }
