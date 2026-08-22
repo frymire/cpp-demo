@@ -3,39 +3,43 @@
 using std::cout;
 using std::endl;
 
-class Entity {
+namespace
+{
+  class Entity {
 
-  int m_x;
+    int m_x;
 
-  // Mutable variables can be changed even in methods marked as const.
-  mutable int m_num_get_calls = 0;
+    // Mutable variables can be changed even in methods marked as const.
+    mutable int m_num_get_calls = 0;
 
-public:
+  public:
 
-  Entity(int x): m_x(x) {}
+    explicit Entity(const int x): m_x(x) {}
 
-  // Appending const to a class method prevents you from modifying member variables.
-  int const_get_x() const {
-    //m_x = 2; // compile error
-    m_num_get_calls++; // allowed for variables declared mutable
-    return m_x;
+    // Appending const to a class method prevents you from modifying member variables.
+    int get_x() const {
+      //m_x = 2; // compile error
+      m_num_get_calls++; // allowed for variables declared mutable
+      return m_x;
+    }
+
+    void set_x(const int x) { m_x = x; }
+
+    int get_num_get_calls() const { return m_num_get_calls; }
+  };
+
+  // Passing by constant reference.
+  [[maybe_unused]] void print_entity(const Entity& e) {
+    //e = new Entity(100); // compile error, can't change the pointer to the Entity.
+    //e.SetX(100); // compile error, can't call a non-const method.
+    cout << e.get_x() << endl;
   }
 
-  void set_x(int x) { m_x = x; }
-
-  int get_num_get_calls() { return m_num_get_calls; }
-};
-
-// Passing by constant reference.
-void PrintEntity(const Entity& e) { 
-  //e = new Entity(100); // compile error, can't change the pointer to the Entity.
-  //e.SetX(100); // compile error, can't call a non-const method.
-  cout << e.const_get_x() << endl;
 }
 
 int main() {
-  
-  const int kMaxAge = 90;
+
+  constexpr int kMaxAge = 90;
 
   // If you put const before the pointer sign *, the contents pointed to can't change.
   // You can do it two equivalent ways...
@@ -63,7 +67,13 @@ int main() {
   //*ptr4 = 40; // compile error
   //ptr4 = (const int*) &kMaxAge; // compile error
 
+  cout << "\nIn classes...\n";
   Entity e{5};
-  cout << e.const_get_x() << endl;
+  cout << e.get_x() << endl;
   cout << e.get_num_get_calls() << endl;
+  e.set_x(6);
+  cout << e.get_x() << endl;
+  cout << e.get_num_get_calls() << endl;
+
+  return 0;
 }
