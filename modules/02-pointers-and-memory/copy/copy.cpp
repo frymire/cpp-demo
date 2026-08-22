@@ -6,9 +6,9 @@ using std::cout;
 using std::endl;
 using std::ostream;
 
-struct Vector2 { 
+struct Vector2D { 
   float x, y;  
-  void Print() { cout << x << " " << y << endl; }
+  void print() { cout << x << " " << y << endl; }
 };
 
 class MyString {
@@ -61,15 +61,15 @@ void PrintByReference(const MyString& string) { cout << string << endl; }
 
 int main() {
 
-  Vector2 a1 = {1, 2};
-  Vector2 b1 = a1; // copy
+  Vector2D a1 = {1, 2};
+  Vector2D b1 = a1; // copy
   b1.x = 5;
-  a1.Print(); // still 1 2
+  a1.print(); // still 1 2
 
-  Vector2* a2 = new Vector2({1, 2});
-  Vector2* b2 = a2; // copies address of a2 to b2
+  Vector2D* a2 = new Vector2D({1, 2});
+  Vector2D* b2 = a2; // copies address of a2 to b2
   b2->x = 5;
-  a2->Print(); // now 5 2
+  a2->print(); // now 5 2
 
   cout << "\nMake a string...\n";
   MyString original = "Mark";
