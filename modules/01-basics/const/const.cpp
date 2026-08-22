@@ -8,34 +8,34 @@ class Entity {
   int m_x;
 
   // Mutable variables can be changed even in methods marked as const.
-  mutable int m_n_get_calls = 0;
+  mutable int m_num_get_calls = 0;
 
 public:
 
   Entity(int x): m_x(x) {}
 
   // Appending const to a class method prevents you from modifying member variables.
-  int ConstGetter() const {
+  int const_get_x() const {
     //m_x = 2; // compile error
-    m_n_get_calls++; // allowed for variables declared mutable 
+    m_num_get_calls++; // allowed for variables declared mutable
     return m_x;
   }
 
-  void SetX(int x) { m_x = x; }
+  void set_x(int x) { m_x = x; }
 
-  int NumGetCalls() { return m_n_get_calls; }
+  int get_num_get_calls() { return m_num_get_calls; }
 };
 
 // Passing by constant reference.
 void PrintEntity(const Entity& e) { 
   //e = new Entity(100); // compile error, can't change the pointer to the Entity.
   //e.SetX(100); // compile error, can't call a non-const method.
-  cout << e.ConstGetter() << endl; 
+  cout << e.const_get_x() << endl;
 }
 
 int main() {
   
-  const int MAX_AGE = 90;
+  const int kMaxAge = 90;
 
   // If you put const before the pointer sign *, the contents pointed to can't change.
   // You can do it two equivalent ways...
@@ -46,24 +46,24 @@ int main() {
   //*ptr1 = 10; // compile error, can't change the contents 
 
   // It's possible to change the address that the pointer points to. 
-  ptr1 = (int*) &MAX_AGE;
+  ptr1 = &kMaxAge;
   cout << *ptr1 << endl;
-  //*ptr1 = 10; // compile error, still can't change the contents 
+  //*ptr1 = 10; // compile error, still can't change the contents
 
   // If you put const after the pointer sign *, the pointer cannot change, but the contents can.
   int* const ptr3 = new int(3);
   cout << *ptr3 << endl; 
   *ptr3 = 30;
   cout << *ptr3 << endl;
-  //ptr3 = (int*) &MAX_AGE; // compile error, can't change the pointer address
+  //ptr3 = &kMaxAge; // compile error, can't change the pointer address
 
   // Const pointer to const int. Can't change either.
   const int* const ptr4 = new int(4);
   cout << *ptr4 << endl;
   //*ptr4 = 40; // compile error
-  //ptr4 = (const int*) &MAX_AGE; // compile error
+  //ptr4 = (const int*) &kMaxAge; // compile error
 
-  Entity e(5);
-  cout << e.ConstGetter() << endl;
-  cout << e.NumGetCalls() << endl;
+  Entity e{5};
+  cout << e.const_get_x() << endl;
+  cout << e.get_num_get_calls() << endl;
 }

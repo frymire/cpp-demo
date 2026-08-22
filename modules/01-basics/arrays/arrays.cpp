@@ -15,48 +15,54 @@ using std::vector;
 #include <functional>  // lambda functions
 using std::function;
 
+#include <ranges>
+using std::ranges::find_if;
+
 #include <algorithm>
-using std::find_if;
-using std::copy_if;
+using std::ranges::copy_if;
 
 #include <iterator>
 using std::back_inserter;
 
-// Create a demo class to that prints a message when the copy constructor is invoked.
-class Vertex {
-  int m_x, m_y, m_z;
-public:
-  Vertex(int x, int y, int z): m_x(x), m_y(y), m_z(z) {}
-  Vertex(const Vertex& v): m_x(v.m_x), m_y(v.m_y), m_z(v.m_z) { cout << "Copied a Vertex\n"; }
-  void print() const { printf("%d %d %d\n", m_x, m_y, m_z); }
-  friend std::ostream& operator<<(std::ostream& stream, const Vertex& v) {
-    stream << v.m_x << " " << v.m_y << " " << v.m_z;
-    return stream;
-  }
-};
+
+namespace
+{
+  // Create a demo class that prints a message when the copy constructor is invoked.
+  class Vertex {
+    int m_x, m_y, m_z;
+  public:
+    Vertex(int x, int y, int z): m_x(x), m_y(y), m_z(z) {}
+    Vertex(const Vertex& v): m_x(v.m_x), m_y(v.m_y), m_z(v.m_z) { cout << "Copied a Vertex\n"; }
+    void print() const { printf("%d %d %d\n", m_x, m_y, m_z); }
+    friend std::ostream& operator<<(std::ostream& stream, const Vertex& v) {
+      stream << v.m_x << " " << v.m_y << " " << v.m_z;
+      return stream;
+    }
+  };
 
 void print_vertices_by_value(vector<Vertex> vertices) {
   for (Vertex& v : vertices) { v.print(); }
 }
 
-void print_vertices_by_reference(vector<Vertex>& vertices) {
-  for (Vertex& v : vertices) { v.print(); }
+void print_vertices_by_reference(const vector<Vertex>& vertices) {
+  for (const Vertex& v : vertices) { v.print(); }
 }
 
+}
 
 int main() {
 
   cout << "\nC-style array on the stack...\n";
-  double c_array_stack[3] = {1.1, 2.2, 3.3};
-  cout << "address = " << c_array_stack << endl;
+  double c_stack_array[3] = {1.1, 2.2, 3.3};
+  cout << "address = " << c_stack_array << endl;
   cout << "\nBracket notation...\n";
-  for (int i = 0; i < 3; i++) { cout << c_array_stack[i] << endl; }
+  for (int i = 0; i < 3; i++) { cout << c_stack_array[i] << endl; }
   cout << "\nPointer arithmetic notation...\n";
   for (int i = 0; i < 3; i++) { 
-    cout << (c_array_stack + i) << ": " << *(c_array_stack + i) << endl; 
+    cout << (c_stack_array + i) << ": " << *(c_stack_array + i) << endl;
   }
-  cout << "On the stack, can get total size in bytes: " << sizeof(c_array_stack) << endl;
-  cout << "Recover number of elements: " << sizeof(c_array_stack) / sizeof(double) << endl;
+  cout << "On the stack, can get total size in bytes: " << sizeof(c_stack_array) << endl;
+  cout << "Recover number of elements: " << sizeof(c_stack_array) / sizeof(double) << endl;
 
   cout << "\nC-style array on the heap...\n";
   double* c_array_heap = new double[3]{10.1, 20.2, 30.3};
@@ -77,18 +83,18 @@ int main() {
   
   cout << "\nVector (data stored on the heap)...\n";
   vector<int> values = {1, 5, 3, 2, 4}; // unlike Java, type parameter can be a primitive
-  function<void(int)> lambda = [=](int x) { cout << x << endl; };
-  for (int v: values) lambda(v); 
+  auto lambda = [](int x) { cout << x << endl; };  // auto is function<void(int)>, but can create an extra copy
+  for (const int v: values) lambda(v);
 
   cout << "\nFind the first element greater than 2...\n";
-  auto gt_2 = [](int x) { return x > 2; };
-  vector<int>::iterator first_gt_2 = find_if(values.begin(), values.end(), gt_2);
-  cout << *first_gt_2 << endl;
+  auto value_is_over_2 = [](const int x) { return x > 2; };
+  const vector<int>::iterator first_value_over_2 = find_if(values, value_is_over_2);
+  cout << *first_value_over_2 << endl;
   
   cout << "\nFilter for all elements greater than 2...\n";
-  vector<int> all_gt_2;
-  copy_if(values.begin(), values.end(), back_inserter(all_gt_2), gt_2);
-  for (auto v: all_gt_2) { cout << v << endl; }
+  vector<int> values_over_2;
+  copy_if(values, back_inserter(values_over_2), value_is_over_2);
+  for (const auto v: values_over_2) { cout << v << endl; }
 
   cout << "\nDirect initialization creates instances on the stack and copies them to the heap...\n";
   vector<Vertex> direct{{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
@@ -144,6 +150,31 @@ int main() {
   best_vertices.emplace_back(4, 5, 6);
   best_vertices.emplace_back(7, 8, 9);
   cout << "Done emplacing back. No copies!\n";
+
+  cout << "\nFor containers, const is deep...\n";
+  const array<Vertex, 3> const_vertices = {{{1, 2, 3}, {4, 5, 6}, {7, 8, 9} }};
+  // const_vertices[2] = Vertex(9, 8, 7);  // illegal, operator[] returns const Vertex& for a const array
+  const_vertices[2].print();
+
+  cout << "\nstd::array and std::vector copies are deep...\n";
+  vector<Vertex> copied = best_vertices;
+  copied[2] = Vertex(9, 8, 7);
+  cout << "copied vertices (last element modified)...\n";
+  for (const Vertex& v : copied) { cout << v << endl; }
+  cout << "best vertices (last element untouched)...\n";
+  for (const Vertex& v : best_vertices) { cout << v << endl; }
+
+  cout << "\nUse at() for bounds checking...\n";
+  best_vertices.at(0).print();
+  // best_vertices.at(3).print(); // out of bounds
+
+  cout << "\nBe aware of different initializer interpretations...\n";
+  cout << "vector<int> vector_with_parens(5)...\n";
+  vector<int> vector_with_parens(5);
+  for (const int& v: vector_with_parens) { cout << v << endl; }
+  cout << "vector<int> vector_with_braces{5}...\n";
+  vector<int> vector_with_braces{5};
+  for (const int& v: vector_with_braces) { cout << v << endl; }
 
   return 0;
 }
