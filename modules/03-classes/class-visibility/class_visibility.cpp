@@ -1,56 +1,73 @@
+// ReSharper disable CppClassNeverUsed
+// ReSharper disable CppDeclaratorNeverUsed
+// ReSharper disable CppEnumeratorNeverUsed
+// ReSharper disable CppMemberFunctionMayBeStatic
+// ReSharper disable CppRedundantAccessSpecifier
 
 #include <iostream>
 using std::cout;
 using std::endl;
 
-// You can declare public/private/protected multiple times to better organize class members.
-class Log {
-public:
-  enum Level { kError, kWarning, kInfo };
-private:
-  Level m_log_level = kInfo;
-private:
-  void PrintIt(const char* label, const char* message) { cout << label << message << endl; }
-public:
-  void SetLevel(Level level) { m_log_level = level; }
-  void Error(const char* message) { PrintIt("[ERROR]: ", message); }
-  void Warn(const char* message) { PrintIt("[WARNING]: ", message); }
-  void Info(const char* message) { PrintIt("[INFO]: ", message); }
-};
+namespace {
 
-// TODO: Friends
+  // You can declare public/private/protected multiple times to better organize class members.
+  class Log {
 
-class Entity {
-private:
-  int m_private;
-  void PrintPrivate() {}
-protected:
-  int m_protected;
-  void PrintProtected() {}
-public:
-  int m_public;
-  void PrintPublic() {}
-};
+  public:
+    enum Level { kError, kWarning, kInfo };
 
-// Player extends Entity
-class Player: public Entity {
-public:
-  Player() {
+  private:
+    Level m_log_level = kInfo;
 
-    // Anyone can access public Entity data members and methods.
-    m_public = 1;
-    PrintPublic();
+  private:
+    static void print_it(const char* label, const char* message) { cout << label << message << endl; }
 
-    // Player can access protected Entity data members and methods, because it extends Entity.
-    m_protected = 2; 
-    PrintProtected();
+  public:
+    void set_level(const Level level) { m_log_level = level; }
+    static void error(const char* message) { print_it("[ERROR]: ", message); }
+    static void warn(const char* message) { print_it("[WARNING]: ", message); }
+    static void info(const char* message) { print_it("[INFO]: ", message); }
+  };
 
-    // No one can access private Entity data members or methods.
-    //m_private = 3;
-    //PrintPrivate();
-  }
-};
+
+  // TODO: Friends
+
+  class Entity {
+
+  private:
+    int m_private = 10;
+    void print_private() const { cout << m_private << endl; }
+
+  protected:
+    int m_protected = 20;
+    void print_protected() const { cout << m_protected << endl; }
+
+  public:
+    int m_public = 30;
+    void print_public() const { cout << m_public << endl; }
+  };
+
+  // Player extends Entity
+  class Player : public Entity {
+  public:
+    Player() {
+
+      // Anyone can access public Entity data members and methods.
+      m_public = 1;
+      print_public();
+
+      // Player can access protected Entity data members and methods, because it extends Entity.
+      m_protected = 2;
+      print_protected();
+
+      // No one can access private Entity data members or methods.
+      // m_private = 3;  // compile error, member is inaccessible
+      // print_private(); // compile error, member is inaccessible
+    }
+  };
+
+}
 
 int main() {
-
+  Player player;
 }
