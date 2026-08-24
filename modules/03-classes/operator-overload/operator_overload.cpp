@@ -8,52 +8,38 @@ using std::endl;
 using std::ostream;
 
 
-class Vector2D {
+namespace {
 
-  float m_x, m_y;
+  class Vector2D {
 
-public:
+    float m_x, m_y;
 
-  Vector2D(float x, float y): m_x(x), m_y(y) {}
+  public:
 
-  Vector2D operator+(const Vector2D& that) const { 
-    return Vector2D(m_x + that.m_x, m_y + that.m_y); 
-  }
-  
-  Vector2D Add(const Vector2D& that) const { 
-    return operator+(that); // you can call operator functions directly
-  }
+    Vector2D(const float x, const float y): m_x(x), m_y(y) {}
+    Vector2D operator+(const Vector2D& that) const { return Vector2D(m_x + that.m_x, m_y + that.m_y); }
+    Vector2D Add(const Vector2D& that) const { return operator+(that); }  // you can call operator functions directly
+    Vector2D operator*(const Vector2D& that) const { return Vector2D(m_x * that.m_x, m_y * that.m_y); }
+    bool operator==(const Vector2D& that) const { return (m_x == that.m_x) && (m_y == that.m_y); }
+    bool operator!=(const Vector2D& that) const { return !(*this == that); }
 
-  Vector2D operator*(const Vector2D& that) const { 
-    return Vector2D(m_x * that.m_x, m_y * that.m_y); 
-  }
+    // Providing two parameters to an operator function implies "parameter1 operator parameter2",
+    // so you can support calls like "cout << Vector2", with the following code. Declare ostream
+    // as a friend, so that it can access Vector2 private members.
+    friend ostream& operator<<(ostream& stream, const Vector2D& v) { return stream << v.m_x << " " << v.m_y; }
+  };
 
-  bool operator==(const Vector2D& that) const {
-    return (m_x == that.m_x) && (m_y == that.m_y);
-  }
-
-  bool operator!=(const Vector2D& that) const {
-    return !(*this == that);
-  }
-
-  // Providing two parameters to an operator function implies "parameter1 operator parameter2", 
-  // so you can support calls like "cout << Vector2", with the following code. Declare ostream 
-  // as a friend, so that it can access Vector2 private members. 
-  friend ostream& operator<<(ostream& stream, const Vector2D& v) {
-    return stream << v.m_x << " " << v.m_y;
-  }
-};
+}
 
 int main() {
 
-  Vector2D position(4.0f, 4.0f);
-  Vector2D speed(0.5f, 1.5f);
-  Vector2D powerup(1.1f, 1.1f);
-  Vector2D expected(4.55f, 5.65f);
-  
+  const Vector2D position(4.0f, 4.0f);
+  const Vector2D speed(0.5f, 1.5f);
+  const Vector2D powerup(1.1f, 1.1f);
+
   // Operator order is retained: *, +, <<, ==
-  cout << position + powerup*speed << endl;
-  cout << (position == Vector2D(4.0f, 4.0f)) << endl;
-  cout << (position != Vector2D(4.0f, 4.0f)) << endl;
-  cout << position.Add(speed) << endl;
+  cout << position + powerup*speed << endl;  // 4.55, 5.65
+  cout << ((position == Vector2D(4.0f, 4.0f)) ? "true" : "false") << endl;  // true
+  cout << ((position != Vector2D(4.0f, 4.0f)) ? "true" : "false") << endl;  // false
+  cout << position.Add(speed) << endl;  // 4.5, 5.5
 }
