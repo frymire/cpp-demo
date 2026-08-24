@@ -9,6 +9,9 @@
 using std::cout;
 using std::endl;
 
+#include <array>
+using std::array;
+
 namespace {
 
   // A mixin base. It supplies an algorithm, print_twice(), written in terms of a function that each
@@ -50,6 +53,29 @@ namespace {
   class Apple : public InstanceCounter<Apple> {};
   class Orange : public InstanceCounter<Orange> {};
 
+  // A third use. C++ has no virtual static member variables, but CRTP gives you the same effect.
+  // The base names the derived type, so it can read a static member that each derived class
+  // declares for itself. A virtual function cannot do this, because virtual dispatch works through
+  // an object, and a static member belongs to the type.
+  template<typename DerivedT>
+  class PrintsIndices {
+  public:
+    void print_indices() const {
+      for (const int i: DerivedT::indices) { cout << i << ' '; }
+      cout << endl;
+    }
+  };
+
+  class Triangle : public PrintsIndices<Triangle> {
+  public:
+    static constexpr array<int, 3> indices = {1, 2, 3};
+  };
+
+  class Quad : public PrintsIndices<Quad> {
+  public:
+    static constexpr array<int, 4> indices = {1, 2, 3, 4};
+  };
+
 }  // namespace
 
 int main() {
@@ -65,6 +91,10 @@ int main() {
   [[maybe_unused]] Orange orange1;
   cout << "Apples created: " << Apple::count() << endl;   // 3
   cout << "Oranges created: " << Orange::count() << endl; // 1
+
+  cout << "\nThe base class reads a static member variable of the derived class...\n";
+  Triangle().print_indices(); // 1 2 3
+  Quad().print_indices();     // 1 2 3 4
 
   // The cost of CRTP: PrintableTwice<Vertex> and PrintableTwice<Circle> are unrelated types, so
   // there is no common base pointer that can hold both a Vertex and a Circle. The next two lines

@@ -12,6 +12,5 @@ add_demo_executable(static
 
 add_demo_executable(operator_overload operator-overload/operator_overload.cpp)
 add_demo_executable(virtual_functions virtual-functions/virtual-functions.cpp)
-add_demo_executable(virtual-member-variables virtual-member-variables/virtual_member_variables.cpp)
 add_demo_executable(singleton singleton/singleton.cpp)
 add_demo_executable(namespace_collision namespace-collision/namespace_collision.cpp)

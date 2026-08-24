@@ -11,6 +11,11 @@ using std::string;
 
 #include <utility>
 
+#include <array>
+using std::array;
+
+#include <ranges>
+
 namespace {
 
   // Compare this with the crtp module. The base needs no template parameter, no static_cast, and no
@@ -38,6 +43,36 @@ namespace {
     auto& get_label(this auto& self) { return self.m_label; }
   };
 
+  // A third use. C++ has no virtual static member variables. The crtp module gets the same effect
+  // by naming the derived type as a template parameter. Here, self reaches the static member
+  // directly, because you can read a static member through an object.
+  template <typename T>
+  concept HasIndices = requires { { T::indices } -> std::ranges::range; };
+
+  class PrintsIndices {
+  public:
+    // The concept on the object parameter states what a derived class must supply. A class that
+    // forgets indices fails right here, with a message that names the requirement. Without the
+    // concept, the same mistake reports a missing member deep inside the loop instead.
+    void print_indices(this const HasIndices auto& self) {
+      for (const int i: self.indices) { cout << i << ' '; }
+      cout << endl;
+    }
+  };
+
+  class Triangle : public PrintsIndices {
+  public:
+    static constexpr array<int, 3> indices = {1, 2, 3};
+  };
+
+  class Quad : public PrintsIndices {
+  public:
+    static constexpr array<int, 4> indices = {1, 2, 3, 4};
+  };
+
+  // Declaring this class is fine. Only a call to print_indices() fails.
+  class Forgetful : public PrintsIndices {};
+
 }  // namespace
 
 int main() {
@@ -57,7 +92,12 @@ int main() {
   cout << const_box.get_label() << endl; // self is const Box&, so label() returns const string&
   // const_box.label() = "no"; // compile error, exactly as you want
 
-  // A third use. A lambda now has a name for itself, so it can call itself. Before C++23, a
+  cout << "\nThe base class reads a static member variable of the derived class...\n";
+  Triangle().print_indices(); // 1 2 3
+  Quad().print_indices();     // 1 2 3 4
+  // Forgetful().print_indices(); // error: constraints not satisfied, because it declares no indices
+
+  // A fourth use. A lambda now has a name for itself, so it can call itself. Before C++23, a
   // recursive lambda needed a std::function or an awkward helper.
   cout << "\nA lambda can now call itself...\n";
   auto factorial = [](this auto&& self, const int n) -> int { return (n <= 1) ? 1 : n * self(n - 1); };
