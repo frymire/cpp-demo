@@ -6,20 +6,24 @@
 using std::cout;
 using std::endl;
 
-class Foo {
-  char m_x;
-  int m_y;
-public:
-  Foo(char x, int y) : m_x(x), m_y(y) {}
-  Foo(int y) : Foo('Z', y) {} // C++11
-  void Print() { cout << m_x << " " << m_y << endl;  }
-};
+namespace {
+
+  class Foo {
+    char m_x;
+    int m_y;
+  public:
+    Foo(const char x, const int y) : m_x(x), m_y(y) {}
+    explicit Foo(const int y) : Foo('Z', y) {} // C++11
+    void print() const { cout << m_x << " " << m_y << endl;  }
+  };
+
+} // namespace
 
 int main() {
-  
-  Foo foo1('A', 1);
-  foo1.Print(); 
-  
-  Foo foo2(2);
-  foo2.Print();  
+
+  const Foo foo1('A', 1);
+  foo1.print();
+
+  const Foo foo2(2);
+  foo2.print();
 }
