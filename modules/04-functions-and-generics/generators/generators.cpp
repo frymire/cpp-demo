@@ -5,13 +5,17 @@
 #include <ranges>
 #include <utility>
 
-std::generator<int> fibonacci() {
-  int i = 0, j = 1;
-  // ReSharper disable once CppDFAEndlessLoop
-  while (true) {
-    i = std::exchange(j, i + j);  // exchange() sets j to i + j, then returns the previous value of j
-    co_yield i;  // without this, we'd be in an infinite loop
+namespace {
+
+  std::generator<int> fibonacci() {
+    int i = 0, j = 1;
+    // ReSharper disable once CppDFAEndlessLoop
+    while (true) {
+      i = std::exchange(j, i + j);  // exchange() sets j to i + j, then returns the previous value of j
+      co_yield i;  // without this, we'd be in an infinite loop
+    }
   }
+
 }
 
 int main() {
