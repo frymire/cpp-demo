@@ -12,10 +12,12 @@ using std::endl;
 #include <functional> 
 // using std::function;
 
-// Define a function to which we will pass a lambda function. If the lambda function won't capture any variables, 
-// you could use a raw function pointer. Otherwise, use std::function.
-//void MyForEach(const std::vector<int>& values, void(*func)(int)) { for (int v : values) func(v); }
-void MyForEach(const std::vector<int>& values, const std::function<void(int)>& f) { for (int v : values) f(v); }
+namespace {
+  // Define a function to which we will pass a lambda function. If the lambda function won't capture any variables,
+  // you could use a raw function pointer. Otherwise, use std::function.
+  //void MyForEach(const std::vector<int>& values, void(*func)(int)) { for (int v : values) func(v); }
+  void my_for_each(const std::vector<int>& values, const std::function<void(int)>& f) { for (int v : values) f(v); }
+}
 
 int main() {
 
@@ -26,7 +28,7 @@ int main() {
   std::vector<int> my_values = {1, 5, 3, 4, 2};
   auto print_value = [](int value) { cout << "Value = " << value << endl; };
   //auto print_value = [](int value) -> void { cout << "Value = " << value << endl; }; // explicit void return
-  MyForEach(my_values, print_value);
+  my_for_each(my_values, print_value);
 
 
   // Demonstrate the (rarely used) "mutable" keyword for lambda functions. Suppose we are passing by value to 
