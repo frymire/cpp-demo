@@ -5,6 +5,7 @@
 // See here for more details on defining a custom hash:
 // https://stackoverflow.com/questions/17016175/c-unordered-map-using-a-custom-class-type-as-the-key
 
+// ReSharper disable CppUseDesignatedInitializers
 #include <cstdint>
 
 #include <iostream>
@@ -21,48 +22,48 @@ using std::map;
 #include <unordered_map> // hash table, typically faster
 using std::unordered_map;
 
-struct CityRecord {
+namespace {
+  struct CityRecord {
 
-  string name;
-  uint64_t population;
-  double latitude, longitude;
+    string name;
+    uint64_t population = 0;
+    double latitude = 0.0, longitude = 0.0;
 
-  // Need operator== (plus a hash function, see below) to use CityRecord as a key in an unordered_map.
-  bool operator==(const CityRecord& that) const { 
-    return (name == that.name); 
-    //return (name == that.name) && (population == that.population) && (latitude == that.latitude) && (longitude == that.longitude); // better!
+    // Need operator== (plus a hash function, see below) to use CityRecord as a key in an unordered_map.
+    bool operator==(const CityRecord& that) const {
+      return (name == that.name);
+      //return
+      //   (name == that.name) &&
+      //   (population == that.population) &&
+      //   (latitude == that.latitude) &&
+      //   (longitude == that.longitude); // better!
+    }
+
+    // Need operator< to use CityRecord as a key in a (sorted) map.
+    bool operator<(const CityRecord& that) const { return population < that.population; }
+
+    friend ostream& operator<<(ostream& os, const CityRecord& cr);
+  };
+
+  ostream& operator<<(ostream& os, const CityRecord& cr) {
+    os << "Name: " << cr.name << ", Population: " << cr.population <<
+      ", Latitude: " << cr.latitude << ", Longitude: " << cr.longitude;
+    return os;
   }
 
-  // Need operator< to use CityRecord as a key in a (sorted) map.
-  bool operator<(const CityRecord& that) const { return population < that.population; }
+} // namespace
 
-  friend ostream& operator<<(ostream& os, const CityRecord& cr);
+// Using an unordered_map requires a hash function over the map keys. If you are tempted to hash directly off of
+// CityRecord, first consider hashing from a CityRecord* pointer, which is just a uint64_t. Otherwise, specialize
+// the hash template like this.
+template<>
+struct std::hash<CityRecord> {
+  size_t operator()(const CityRecord& key) const noexcept {
+    return hash<string>()(key.name); // should be a unique function
+  }
 };
 
-ostream& operator<<(ostream& os, const CityRecord& cr) {
-  os << "Name: " << cr.name << ", Population: " << cr.population << ", Latitude: " << cr.latitude << ", Longitude: " << cr.longitude;
-  return os;
-}
-
-namespace std {
-
-  // Using an unordered_map requires a hash function over the map keys. If you are tempted to hash directly off of CityRecord,
-  // first consider hashing from a CityRecord* pointer, which is just a uint64_t. Otherwise, specialize the hash template like this.
-  template<>
-  struct hash<CityRecord> {
-    size_t operator()(const CityRecord& key) const {
-      return hash<string>()(key.name); // should be a unique function
-    }
-  };
-  // The syntax "template<>" indicates that we have specialized the original template...
-  // template<T> 
-  // struct hash<T> { ... }
-  // with a particular type, CityRecord in this case. In doing so, the remaining list of template parameters is now empty.
-  // See here: https://stackoverflow.com/questions/4872809/in-c-what-does-template-mean
-
-}
-
-int main(void) {
+int main() {
 
   map<string, CityRecord> city_map;
   city_map["Melbourne"] = CityRecord{"Melbourne", 500000, 2.4, 9.4};
@@ -92,7 +93,7 @@ int main(void) {
 
   cout << "\nUse at() to retrieve the data without inserting missing values.\n";
   cout << city_map.at("Berlin") << endl;
-  if(city_map.find("Hong Kong") != city_map.end()) {
+  if(city_map.contains("Hong Kong")) {
     const CityRecord& hong_kong_data = city_map.at("Hong Kong");
     cout << hong_kong_data << endl;
   } else {
@@ -100,6 +101,7 @@ int main(void) {
   }
   
     cout << "\nPrint all entries using C++14 (results for a map are sorted by key).\n";
+  // ReSharper disable once CppUseStructuredBinding
   for(auto& kv: city_map) {
     const string& name = kv.first;
     CityRecord& city = kv.second;
@@ -139,7 +141,8 @@ int main(void) {
   unordered_founded_map[{"LOL-Town", 500000, 2.4, 9.4}] = 1712;
   cout << unordered_founded_map[{"LOL-Town", 500000, 2.4, 9.4}] << endl;
 
-  cout << "\nSince we defined the hash based only on the name, applying keys with changes to other fields still returns the value.\n";
+  cout << "\nSince we defined the hash based only on the name, applying keys with changes to other fields still "
+          "returns the value.\n";
   cout << unordered_founded_map[CityRecord{"Melbourne", 500000, 2.4, 9.4}] << endl;
   cout << unordered_founded_map[CityRecord{"Melbourne", 123456, 1.2, 3.5}] << endl;
 
