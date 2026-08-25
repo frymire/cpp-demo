@@ -21,12 +21,12 @@ namespace {
 
 int main() {
 
-  // Pass a lambda function to MyForEach (or anywhere else you can use a function pointer). The [] notation 
+  // Pass a lambda function to my_for_each (or anywhere else you can use a function pointer). The [] notation
   // denotes the capture method, which provides a means to use variables from the local scope. Use [=] to pass 
   // all parameters by value, [&] to pass all by reference, [a, &b] to capture a by value and b by reference, and 
   // [] to capture nothing. The optional "-> {type}" notation on the interior explicitly declares the return type.
-  std::vector<int> my_values = {1, 5, 3, 4, 2};
-  auto print_value = [](int value) { cout << "Value = " << value << endl; };
+  const std::vector<int> my_values = {1, 5, 3, 4, 2};
+  auto print_value = [](const int value) { cout << "Value = " << value << endl; };
   //auto print_value = [](int value) -> void { cout << "Value = " << value << endl; }; // explicit void return
   my_for_each(my_values, print_value);
 
