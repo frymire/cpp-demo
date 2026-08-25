@@ -3,26 +3,28 @@
 //   https://www.youtube.com/watch?v=RCHGco2NvMk&list=WL&index=80
 //   https://github.com/engineer-man/youtube/blob/master/078/double.c
 
+#include <cstdio>
+
 #include "doubly_linked_list.h"
 
-int main(int argc, char **argv) {
+int main() {
 
-  DoublyLinkedList my_list;
-  my_list.AddAtEnd(2);
-  my_list.AddAtEnd(3);
-  my_list.AddAtEnd(5);
-  my_list.AddAtBeginning(1);
-  my_list.AddAt(4, 3);
+  DoublyLinkedList list;
+  list.add_at_end(2);
+  list.add_at_end(3);
+  list.add_at_end(5);
+  list.add_at_beginning(1);
+  list.add_at(4, 3);
 
   printf("forward:\n");
-  my_list.Print();
+  list.print();
 
-  my_list.Remove(1);
-  my_list.Remove(3);
-  my_list.Remove(5);
+  list.remove(1);
+  list.remove(3);
+  list.remove(5);
 
   printf("\nreverse:\n");
-  my_list.PrintInReverse();
+  list.print_in_reverse();
 
   return 0;
 }
