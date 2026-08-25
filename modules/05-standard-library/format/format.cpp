@@ -1,55 +1,75 @@
 // https://www.youtube.com/watch?v=teOe2IKGlC0&list=WL&index=2
 
+// ReSharper disable CppUseDesignatedInitializers
+
 #include <format>
+using std::format;
+using std::formatter;
+using std::format_context;
+
 #include <print>
+using std::println;
+
 #include <string>
+using std::string;
+
 #include <concepts>
 
-template <class T>
-concept HasToString = requires(const T& t) {
-    { t.to_string() } -> std::convertible_to<std::string>;
-};
-
-template<typename T> requires HasToString<T>
-struct TFormatter : std::formatter<std::string> {
-    auto format(const T& value, std::format_context& context) const {
-        return std::formatter<std::string>::format(value.to_string(), context);
-    }
-};
-
 namespace demo {
+  namespace {
 
     class Point {
     public:
-        Point(int x, int y) : x_(x), y_(y) {}
-        [[nodiscard]] std::string to_string() const { return std::format("({}, {})", x_, y_); }
+      Point(const int x, const int y) : m_x(x), m_y(y) {}
+      [[nodiscard]] string to_string() const { return format("({}, {})", m_x, m_y); }
+
     private:
-        int x_, y_;
+      int m_x, m_y;
     };
 
     struct Size {
-        int w, h;
-        [[nodiscard]] std::string to_string() const { return std::format("{} x {}", w, h); }
+      int w, h;
+      [[nodiscard]] string to_string() const { return format("{} x {}", w, h); }
     };
 
+    // The following concept and formatter, plus the specializations in namespace std, allow std::println to work
+    // automatically, without to_string().
+
+    template <class T>
+    concept HasToString = requires(const T& t) {
+      { t.to_string() } -> std::convertible_to<string>;
+    };
+
+    template <typename T> requires HasToString<T>
+    struct TFormatter : formatter<string> {
+      auto format(const T& value, format_context& context) const {
+        return formatter::format(value.to_string(), context);
+      }
+    };
+
+  }  // namespace
 } // namespace demo
 
 // Explicit specializations must be in namespace std.
 namespace std {
-    template <>
-    struct formatter<demo::Point> : TFormatter<demo::Point> {};
-    template <>
-    struct formatter<demo::Size> : TFormatter<demo::Size> {};
+  template <>
+  struct formatter<demo::Point> : demo::TFormatter<demo::Point> {};
+
+  template <>
+  struct formatter<demo::Size> : demo::TFormatter<demo::Size> {};
 } // namespace std
 
 int main() {
 
-    std::println("\npoint = {}", demo::Point{3, 4}.to_string());
-    std::println("size  = {}", demo::Size{1920, 1080}.to_string());
+  using demo::Point;
+  using demo::Size;
 
-    // Add the TFormatter template and a specialization for each class to auto-convert to strings.
-    std::println("\npoint = {}", demo::Point{3, 4});
-    std::println("size  = {}", demo::Size{1920, 1080});
+  println("\npoint = {}", Point{3, 4}.to_string());
+  println("size = {}", Size{1920, 1080}.to_string());
 
-    return 0;
+  // Add the TFormatter template and a specialization for each class to auto-convert to strings.
+  println("\npoint = {}", Point{3, 4});
+  println("size = {}", Size{1920, 1080});
+
+  return 0;
 }
