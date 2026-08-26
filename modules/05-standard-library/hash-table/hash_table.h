@@ -1,12 +1,10 @@
 
 #pragma once
 
-// Suppress security errors using strcpy instead of strcpy_s
-#define _CRT_SECURE_NO_WARNINGS
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include <cstdio>
+#include <cstdlib>
+// ReSharper disable once CppUnusedIncludeDirective
+#include <cstring>
 
 class Entry {
 public:
@@ -15,17 +13,17 @@ public:
   Entry* m_next;
   Entry(const char* key, const char* value);
   ~Entry();
-  static unsigned int Hash(const char* m_key, const int table_size);
+  static unsigned int Hash(const char* m_key, int table_size);
 };
 
 class HashTable {
 public:
   const int k_table_size;
   Entry** m_entries;
-  HashTable(int table_size);
+  explicit HashTable(int table_size);
   ~HashTable();
-  void Set(const char* key, const char* value);
-  char* Get(const char* key);
-  void Remove(const char* key);
-  void Print();
+  void set(const char* key, const char* value) const;
+  char* get(const char* key) const;
+  void remove(const char* key) const;
+  void print() const;
 };

@@ -45,12 +45,13 @@ int main() {
 
   // Use get_if as a clean way to be sure the type is what you expect. Returns either
   // nullptr or a valid pointer to the requested type.
-  string* data_value1 = get_if<string>(&data);
+  // ReSharper disable once CppTooWideScope
+  const string* /*auto**/ data_value1 = get_if<string>(&data); //NOLINT(*-use-auto)
   if (data_value1) { cout << "It's a string: " << *data_value1 << endl; }
 
   // Use get_if again, but this time put the assignment within the if condition.
   data = 10;
-  if (int* data_value2 = get_if<int>(&data)) {
+  if (const int* data_value2 = get_if<int>(&data)) {
     cout << "It's an int: " << *data_value2 << endl;
   }
 }
