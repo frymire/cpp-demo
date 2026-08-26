@@ -1,8 +1,11 @@
 
-// Demonstrate the keyword "volative" for preventing compiler optimizations.
+// Demonstrate the keyword "volatile" for preventing compiler optimizations.
 
 // NOTE: The problem that this code is supposed to show doesn't show up when using Visual Studio. 
-// Use wandbox.org to compile using gcc.
+// Use CLion or wandbox.org to compile using gcc.
+
+// ReSharper disable CppVariableCanBeMadeConstexpr
+// ReSharper disable CppUseAuto
 
 #include <stdio.h>
 

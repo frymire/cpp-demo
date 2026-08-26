@@ -10,10 +10,10 @@
 
 namespace shared_library {
 
-  EXPORT void PrintMessage();
+  EXPORT void print_message();
 
   class EXPORT Foo {
   public:
-    Foo() { std::cout << "Foo!" << std::endl; }
+    Foo() { std::cout << "Constructing Foo!" << std::endl; }
   };
 }

@@ -4,12 +4,14 @@
 // for instance, by saying "using my_cout = std::cout".
 // See here: https://www.youtube.com/watch?v=4NYC-VU-svE&list=WL&index=86
 
+// ReSharper disable CppUseInternalLinkage
+
 #include <iostream>
 #include <string> // provides a conversion from const std::string to const char*
 
-namespace top_level_namespace { namespace lower_level_namespace {
+namespace top_level_namespace::lower_level_namespace {
   void print() { std::cout << "Hey, how's it going?\n"; }
-} }
+}
 
 namespace printer {
   void print(const std::string& name) { std::cout << name << " is awesome!\n"; }
@@ -33,7 +35,8 @@ int main() {
   // char* to string. However, malicious_printer::print() takes precedence, because it doesn't 
   // need to do any conversion. There's no compiler warning, because both functions are declared 
   // with the same name, but a different signature. The result is a silent run-time error.
-  using printer::print;
+  std::cout << "\nSurprising choice of print precedence when no argument conversion is required...\n";
   using malicious_printer::print;
+  using printer::print;
   print("Mark"); // prints "Mark is terrible!"
 }

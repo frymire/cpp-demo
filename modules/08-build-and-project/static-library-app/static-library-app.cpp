@@ -17,5 +17,5 @@
 //   Right-click the project -> Add -> Reference -> {select the static library project}
 
 int main() {
-  static_library::PrintMessage();
+  static_library::print_message();
 }

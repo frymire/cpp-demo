@@ -14,19 +14,25 @@ using std::this_thread::sleep_for;
 #include <chrono>
 using namespace std::chrono_literals; // define time, for instance, as "1s"
 
-static bool s_enter_was_pressed = false;
+#include <atomic>
 
-void DoWork() {
+static std::atomic s_enter_was_pressed = false;
 
-  cout << "Started thread ID = " << std::this_thread::get_id() << endl;
+namespace {
 
-  while (!s_enter_was_pressed) { 
-    cout << "Working...\n"; 
-    sleep_for(1s);
+  void do_work() {
+
+    cout << "Started thread ID = " << std::this_thread::get_id() << endl;
+
+    while (!s_enter_was_pressed) {
+      cout << "Working...\n";
+      sleep_for(1s);
+    }
+
+    cout << "Finished thread ID = " << std::this_thread::get_id() << endl;
   }
 
-  cout << "Finished thread ID = " << std::this_thread::get_id() << endl;
-}
+} // namespace
 
 int main() {
 
@@ -34,7 +40,8 @@ int main() {
   cout << "Started thread ID = " << std::this_thread::get_id() << endl;
 
   // Start a worker thread.
-  thread worker(DoWork);
+  thread worker(do_work);
+
 
   // Block on the main thread until the user presses enter.
   cin.get();
