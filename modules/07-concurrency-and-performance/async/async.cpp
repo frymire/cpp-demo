@@ -6,8 +6,15 @@
 using std::cout;
 using std::endl;
 
+#include <syncstream>
+using std::osyncstream;
+
 #include <string>
 using std::string;
+using std::to_string;
+
+#include <array>
+using std::array;
 
 #include <thread>
 using std::this_thread::sleep_for;
@@ -19,31 +26,32 @@ using std::launch;
 
 #include <chrono>
 using namespace std::chrono;
-using namespace std::chrono_literals; // define time, for instance, as "1s"
 
-string RunTask1(const string& data) {
-  sleep_for(5s);
-  return "Task 1: " + data;
-}
+namespace {
 
-string RunTask2(const string& data) {
-  sleep_for(5s);
-  return "Task 2: " + data;
-}
+  string run_task(const string& data) {
+    osyncstream(cout) << "Running " << data << " task..." << endl;  // osyncstream keeps << calls together
+    sleep_for(3s);
+    return "Done: " + data;
+  }
+
+} // namespace
 
 int main() {
 
-  // Run two tasks, the first asynchronously.
+  constexpr int kNumTasks = 10;
   cout << "Starting...\n";
-  system_clock::time_point start_time = system_clock::now();
-  future<string> task1_future = async(launch::async, RunTask1, "data1");
-  string task2_result = RunTask2("data2");
+  const steady_clock::time_point start_time = steady_clock::now();
 
-  // Block until the result is available from the Task 1 future.
-  string task1_result = task1_future.get();
-  system_clock::time_point stop_time = system_clock::now();
+  array<future<string>, kNumTasks> futures;
+  for (int i = 0; i < kNumTasks; i++) { futures[i] = async(launch::async, run_task, "data" + to_string(i)); }
 
-  long long duration = duration_cast<seconds> (stop_time - start_time).count();
-  cout << task1_result << endl << task2_result << endl;
-  cout << "Duration = " << duration << " s" << endl;
+  array<string, kNumTasks> results;
+  for (int i = 0; i < kNumTasks; i++) { results[i] = futures[i].get(); }
+  const steady_clock::time_point stop_time = steady_clock::now();
+  const long long duration = duration_cast<milliseconds> (stop_time - start_time).count();
+
+  cout << endl;
+  for (const auto& result : results) { cout << result << endl; }
+  cout << "Duration = " << duration << " ms" << endl;
 }
