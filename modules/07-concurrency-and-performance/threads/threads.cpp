@@ -7,6 +7,12 @@ using std::cout;
 using std::endl;
 using std::cin;
 
+#include <syncstream>
+using std::osyncstream;
+
+#include <vector>
+using std::vector;
+
 #include <thread>
 using std::thread;
 using std::this_thread::sleep_for;
@@ -14,40 +20,40 @@ using std::this_thread::sleep_for;
 #include <chrono>
 using namespace std::chrono_literals; // define time, for instance, as "1s"
 
-#include <atomic>
+
 
 static std::atomic s_enter_was_pressed = false;
 
 namespace {
 
-  void do_work() {
-
-    cout << "Started thread ID = " << std::this_thread::get_id() << endl;
-
+  void do_work(const int id) {
+    osyncstream(cout) << "Started local thread ID = " << id << endl;
     while (!s_enter_was_pressed) {
-      cout << "Working...\n";
-      sleep_for(1s);
+      osyncstream(cout) << "Thread " << id << " working...\n";
+      sleep_for(3s);
     }
-
-    cout << "Finished thread ID = " << std::this_thread::get_id() << endl;
+    osyncstream(cout) << "Finished local thread ID = " << id << endl;
   }
 
 } // namespace
 
 int main() {
 
+  constexpr int kNumThreads = 4;
+
+  cout << "Started main thread.\n";
   cout << "Press [Enter] to interrupt." << endl;
-  cout << "Started thread ID = " << std::this_thread::get_id() << endl;
 
-  // Start a worker thread.
-  thread worker(do_work);
+  // Start some worker threads.
 
+  vector<thread> threads;
+  for (int id = 0; id < kNumThreads; ++id) { threads.emplace_back(do_work, id); }
 
   // Block on the main thread until the user presses enter.
   cin.get();
   s_enter_was_pressed = true;
 
-  // Wait for worker to complete its work and rejoin the main thread.
-  worker.join();
-  cout << "Finished thread ID = " << std::this_thread::get_id() << endl;
+  // Wait for the workers to complete their work and rejoin the main thread.
+  for (thread& thread: threads) { thread.join(); }
+  cout << "Finished main thread." << endl;
 }
