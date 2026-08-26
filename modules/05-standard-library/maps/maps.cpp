@@ -16,6 +16,9 @@ using std::ostream;
 #include <string>
 using std::string;
 
+#include <utility>
+using std::pair;
+
 #include <map> // ordered, typically a red-black tree
 using std::map;
 
@@ -23,6 +26,7 @@ using std::map;
 using std::unordered_map;
 
 namespace {
+
   struct CityRecord {
 
     string name;
@@ -92,6 +96,7 @@ int main() {
   cout << city_map["Tokyo"] << endl;
 
   cout << "\nUse at() to retrieve the data without inserting missing values.\n";
+  // cout << city_map["Hong Kong"] << endl;  // *adds* a record for Hong Kong, probably not what you wanted
   cout << city_map.at("Berlin") << endl;
   if(city_map.contains("Hong Kong")) {
     const CityRecord& hong_kong_data = city_map.at("Hong Kong");
@@ -100,9 +105,9 @@ int main() {
     cout << "Hong Kong not found.\n";
   }
   
-    cout << "\nPrint all entries using C++14 (results for a map are sorted by key).\n";
+  cout << "\nPrint all entries using C++14 (results for a map are sorted by key).\n";
   // ReSharper disable once CppUseStructuredBinding
-  for(auto& kv: city_map) {
+  for(pair<const string, CityRecord>& /*auto&*/ kv: city_map) {
     const string& name = kv.first;
     CityRecord& city = kv.second;
     cout << "Key: " << name << ", Value: " << city << endl;
@@ -129,7 +134,7 @@ int main() {
 
   // Since our operator< is based on population, adding a record with the same 
   // population overwrites the value, but won't replace the key (!).
-  cout << "\nAdd a record with a clashing key (custom operator< is based only on population).\n";
+  cout << "\nAdd a record with a clashing key overwrites the value, but won't replace the key (!).\n";
   founded_map[CityRecord{"Berlin", 500001, 2.4, 9.4}] = 1912;
   for(auto&[name, city] : founded_map) {
     cout << "Key: " << name << ", Value: " << city << endl;
