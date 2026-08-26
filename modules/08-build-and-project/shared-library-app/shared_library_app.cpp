@@ -27,6 +27,6 @@ using std::endl;
 // putting the DLL in the same folder as the executable.
 
 int main() {
-  shared_library::Foo my_foo;
-  shared_library::PrintMessage();
+  shared_library::Foo foo;
+  shared_library::print_message();
 }

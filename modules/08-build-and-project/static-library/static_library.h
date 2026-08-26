@@ -7,5 +7,5 @@
 #pragma once
 
 namespace static_library {
-  void PrintMessage();
+  void print_message();
 }
