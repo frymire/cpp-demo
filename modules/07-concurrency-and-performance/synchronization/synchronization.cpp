@@ -1,4 +1,3 @@
-
 // Demonstrate the tools that let several threads share data safely.
 
 #include <iostream>
@@ -16,6 +15,7 @@ using std::string;
 using std::to_string;
 
 #include <thread>
+using std::thread;
 using std::jthread;
 using std::this_thread::sleep_for;
 
@@ -43,7 +43,7 @@ namespace {
   constexpr int kNumThreads = 8;
 
   // Run one job on k_n_threads threads, and wait for all of them to finish.
-  template<typename JobT>
+  template <typename JobT>
   void run_on_all_threads(JobT job) {
     vector<jthread> threads;
     for (int i = 0; i < kNumThreads; i++) { threads.emplace_back(job, i); }
@@ -54,8 +54,8 @@ namespace {
 
 int main() {
 
-  constexpr int kIncrementsPerThread = 100'000;
-  constexpr int kExpectedTotal = kNumThreads * kIncrementsPerThread;
+  constexpr int kIterationsPerThread = 100'000;
+  constexpr int kExpectedTotal = kNumThreads * kIterationsPerThread;
 
   cout << "\nExpected total in every case below: " << kExpectedTotal << "\n" << endl;
 
@@ -63,7 +63,7 @@ int main() {
   // so one of the two increments disappears.The count comes out too low, and by a different amount on every run.
   {
     int counter = 0;
-    run_on_all_threads([&counter](int) { for (int i = 0; i < kIncrementsPerThread; i++) { ++counter; } });
+    run_on_all_threads([&counter](int) { for (int i = 0; i < kIterationsPerThread; i++) { ++counter; } });
     cout << "1. plain int          = " << counter << "   <- WRONG, updates were lost" << endl;
   }
 
@@ -72,7 +72,7 @@ int main() {
   {
     cout << endl;
     atomic counter = 0;
-    run_on_all_threads([&counter](int) { for (int i = 0; i < kIncrementsPerThread; i++) { ++counter; } });
+    run_on_all_threads([&counter](int) { for (int i = 0; i < kIterationsPerThread; i++) { ++counter; } });
     cout << "2. atomic             = " << counter << "   <- correct" << endl;
   }
 
@@ -85,7 +85,7 @@ int main() {
     int counter2 = 0;  // a second variable that must agree with the first
     mutex counter_mutex;
     run_on_all_threads([&](int) {
-      for (int i = 0; i < kIncrementsPerThread; i++) {
+      for (int i = 0; i < kIterationsPerThread; i++) {
         lock_guard lock(counter_mutex);  // held until the end of this iteration
         counter1++;
         counter2++;
@@ -125,15 +125,21 @@ int main() {
   // LATCH. A one-shot gate. Each thread calls count_down() when it reaches the point, and any
   // thread calling wait() blocks until the count reaches zero. A latch cannot be reused.
   {
-    cout << "\n5. Wait for all 8 threads to finish their setup...\n";
-    latch setup_done(kNumThreads);
-    run_on_all_threads([&setup_done](const int id) {
-      sleep_for(milliseconds(20 * id));   // each thread takes a different amount of time
-      osyncstream(cout) << "   thread " << id << " finished setup" << endl;
-      setup_done.count_down();
-    });
-    setup_done.wait();   // returns only after all 8 have counted down
-    cout << "   all threads are ready" << endl;
+    atomic s_count = 0;
+    latch work_is_done(kNumThreads);
+    vector<thread> threads;
+    for (int i = 0; i < kNumThreads; ++i) {
+      threads.emplace_back([&] {
+        for (int j = 0; j < kIterationsPerThread; j++) { ++s_count; }
+        work_is_done.count_down();
+      });
+    }
+    work_is_done.wait();  // block until count_down() has been called kNumThreads times
+
+    cout << "\n5. A latch can provide a window when the work is done, but the threads have yet to join.\n";
+    cout << "   " << s_count << " (" << kNumThreads * kIterationsPerThread << ")" << endl;
+
+    for (thread& t: threads) { t.join(); }  // still have to do the joins
   }
 
   // BARRIER. Like a latch, but reusable. Every thread waits at the barrier until all of them
@@ -141,7 +147,7 @@ int main() {
   // phase, on one thread, while the others are still blocked.
   {
     cout << "\n6. Move 8 threads through 3 phases together...\n";
-    atomic<int> phase = 1;
+    atomic phase = 1;
     barrier sync_point(kNumThreads, [&phase]() noexcept {
       osyncstream(cout) << "   --- phase " << phase++ << " complete for all threads ---" << endl;
     });
@@ -149,7 +155,7 @@ int main() {
     run_on_all_threads([&sync_point](const int id) {
       for (int p = 0; p < 3; p++) {
         sleep_for(milliseconds(10 * id));
-        sync_point.arrive_and_wait();   // blocks until all 8 threads arrive
+        sync_point.arrive_and_wait();   // blocks the worker thread until all 8 threads arrive for each phase
       }
     });
   }
