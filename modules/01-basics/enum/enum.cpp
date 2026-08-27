@@ -1,13 +1,14 @@
 
 // ReSharper disable CppEnumeratorNeverUsed
 
+// ReSharper disable CppUseAuto
 #include <iostream>
 using std::cout;
 using std::endl;
 
 namespace {
 
-  void print_bool(bool b) { cout << (b ? "true" : "false") << endl; }
+  void print_bool(const bool b) { cout << (b ? "true" : "false") << endl; }
 
   // Default is to number from zero...
   enum UnscopedLevel { Error, Warning, Info };  // 0, 1, 2
@@ -36,7 +37,7 @@ int main() {
   print_level(Info);
 
   cout << "\nCompare two unrelated enums...\n";
-  if (unscoped_level == XYZ::X) { cout << "Works, but a compile error would be better.\n"; }
+  if constexpr (unscoped_level == XYZ::X) { cout << "Works, but a compile error would be better.\n"; }
 
   cout << "\nEnum with non-default values...\n";
   constexpr XYZ value2 = Y;
@@ -45,17 +46,17 @@ int main() {
   cout << (value2 == Y) << endl;
 
   cout << "\nChar based enum...\n";
-  [[maybe_unused]] CharEnum value3 = i3;
-  cout << i3 << endl;
-  cout << (i3 == 'E') << endl;
-  cout << (i3 == 'F') << endl;
+  constexpr CharEnum value3 = i3;
+  cout << value3 << endl;
+  cout << (value3 == 'E') << endl; // false
+  cout << (value3 == 'F') << endl; // true
 
   cout << "\nUsing enum classes to enforce scope...\n";
   // Level level = Error;  // compile error, enum classes require scopes
-  Level level = Level::Error;
+  constexpr Level level = Level::Error;
   print_level(Level::Info);
   // print_bool(level == unscoped_level);  // compile error, can't compare across scopes
-  print_bool(level == Level::Error);  // compile error, can't compare across scopes
+  print_bool(level == Level::Error);
 
   return 0;
 }
