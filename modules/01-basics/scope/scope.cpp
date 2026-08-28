@@ -9,7 +9,7 @@
 // Alternatively, to do it across all files in the project, do this...
 //   Project Properties -> C/C++ -> Advanced -> Treat Specific Warnings As Errors -> {add 4172}
 
-#include <stdio.h>
+#include <cstdio>
 
 namespace {
 

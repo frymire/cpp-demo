@@ -18,7 +18,7 @@ using std::string_view;
 
 // Override new so that we can see memory allocations for demo purposes.
 static int s_num_allocations = 0;
-void* operator new(size_t size) {
+void* operator new(const size_t size) {
   cout << "Allocating " << size << " bytes, " << ++s_num_allocations << " allocations total.\n";
   return malloc(size);
 }
@@ -45,19 +45,19 @@ Line4)";
   cout << "\nTest memory allocations when calling string functions...\n";
 
   cout << "\nMake a string less than 16 characters long...\n";
-  string short_name = "Mark Frymire..."; // stack
+  const string short_name = "Mark Frymire..."; // stack
   cout << short_name << endl;
 
   print_name("Mark Frymire..."); // stack
 
   cout << "\nMake a string at least 16 characters long...\n";
-  string long_name = "Mark Frymire...."; // heap
+  const string long_name = "Mark Frymire...."; // heap
   cout << long_name << endl;
 
   print_name("Mark Frymire...."); // heap
 
   cout << "\nExtract substrings...\n";
-  string full_name = "Mark Edward Frymire"; // heap
+  const string full_name = "Mark Edward Frymire"; // heap
   cout << full_name << endl;
   cout << full_name.substr(1, 15) << endl; // stack
   cout << full_name.substr(1, 16) << endl; // heap
